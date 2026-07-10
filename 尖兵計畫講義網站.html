@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>尖兵計畫 - 建築製圖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Bauhaus & Neo-Brutalism Architectural Typography */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --color-white: #ffffff;
+            --color-charcoal: #111827; 
+            --color-terracotta: #c05621;
+            --color-gray: #f3f4f6;
+            --border-thick: 2px solid var(--color-charcoal);
+            --border-thin: 1px solid var(--color-charcoal);
+            /* Architectural Solid Shadows */
+            --shadow-solid: 6px 6px 0px 0px var(--color-charcoal);
+            --shadow-solid-hover: 2px 2px 0px 0px var(--color-charcoal);
+        }
+
+        body { 
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: var(--color-white);
+            color: var(--color-charcoal);
+            scroll-behavior: smooth;
+        }
+        
+        /* Editorial Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--color-gray); border-left: var(--border-thin); }
+        ::-webkit-scrollbar-thumb { background: var(--color-charcoal); }
+
+        /* Pure Geometric Elements */
+        * { border-radius: 0 !important; }
+
+        /* Structural Borders & Shadows */
+        .border-bauhaus { border: var(--border-thick); }
+        .border-b-bauhaus { border-bottom: var(--border-thin); }
+        .border-r-bauhaus { border-right: var(--border-thin); }
+        
+        .shadow-bauhaus { box-shadow: var(--shadow-solid); transition: all 0.2s ease; }
+        .shadow-bauhaus:hover { box-shadow: var(--shadow-solid-hover); transform: translate(4px, 4px); }
+
+        /* Buttons Guarantee High Contrast */
+        .btn-primary {
+            background-color: var(--color-charcoal);
+            color: var(--color-white) !important;
+            border: var(--border-thick);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-solid);
+        }
+        .btn-primary:hover {
+            background-color: var(--color-terracotta);
+            color: var(--color-white) !important;
+            box-shadow: var(--shadow-solid-hover);
+            transform: translate(4px, 4px);
+        }
+
+        .btn-terracotta {
+            background-color: var(--color-terracotta);
+            color: var(--color-white) !important;
+            border: var(--border-thick);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            box-shadow: var(--shadow-solid);
+            transition: all 0.2s ease;
+        }
+        .btn-terracotta:hover {
+            background-color: var(--color-white);
+            color: var(--color-terracotta) !important;
+            box-shadow: var(--shadow-solid-hover);
+            transform: translate(4px, 4px);
+        }
+
+        /* Navigation */
+        .nav-item { 
+            transition: all 0.2s ease; 
+            border-bottom: var(--border-thin);
+            color: var(--color-charcoal);
+        }
+        .nav-item.active { 
+            background-color: var(--color-terracotta); 
+            color: var(--color-white);
+            font-weight: 800;
+            padding-left: 2.5rem;
+        }
+        .nav-item:hover:not(.active) { 
+            background-color: var(--color-charcoal); 
+            color: var(--color-white);
+            padding-left: 2.5rem;
+        }
+
+        /* Content Transitions */
+        .content-section { display: none; opacity: 0; }
+        .content-section.active { display: block; animation: fadeReveal 0.6s ease-out forwards; }
+        
+        @keyframes fadeReveal {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Timeline Blueprint Override */
+        .timeline-box {
+            border-left: 3px solid var(--color-charcoal);
+            padding-left: 2rem;
+            position: relative;
+            margin-bottom: 4rem;
+        }
+        .timeline-box::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 17px;
+            height: 17px;
+            background-color: var(--color-white);
+            border: 3px solid var(--color-terracotta);
+        }
+
+        /* Parallax Hero Section */
+        .hero-parallax {
+            background-image: url('https://placehold.co/1920x1080/111827/ffffff?text=ARCHITECTURAL+DRAFTING');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Typography Scaling */
+        .text-giant { font-size: clamp(2.5rem, 5vw, 5rem); line-height: 1; letter-spacing: -0.02em; }
+        .text-huge { font-size: clamp(1.8rem, 3vw, 3rem); line-height: 1.1; letter-spacing: -0.02em; }
+        
+        /* Table Specs */
+        .spec-table th, .spec-table td { border: var(--border-thin); }
+        .spec-table th { background-color: var(--color-charcoal); color: var(--color-white); text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        /* Quiz Styling */
+        .quiz-option {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .quiz-option:hover { background-color: var(--color-gray); }
+        .quiz-option input[type="radio"]:checked + div {
+            background-color: var(--color-charcoal);
+            color: var(--color-white);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="h-screen overflow-hidden antialiased selection:bg-[#c05621] selection:text-white">
+
+    <!-- 🔑 Login Screen -->
+    <div id="login-view" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#f3f4f6] bg-[radial-gradient(#d1d5db_1px,transparent_1px)] [background-size:20px_20px]">
+        <div class="max-w-md w-full bg-white border-bauhaus shadow-bauhaus p-10 md:p-14 relative">
+            <div class="w-16 h-16 bg-[#111827] text-white flex items-center justify-center text-3xl mb-8 border-2 border-[#111827] shadow-[4px_4px_0px_0px_#c05621]">
+                <i class="fa-solid fa-compass-drafting"></i>
+            </div>
+            <h1 class="text-3xl font-black uppercase mb-1 tracking-tighter">System Access</h1>
+            <p class="text-xs font-bold tracking-widest text-[#c05621] uppercase mb-10">Architectural Drafting</p>
+            
+            <div class="mb-8">
+                <input type="password" id="password-input" class="w-full px-5 py-4 border-bauhaus focus:outline-none focus:bg-gray-50 transition-colors font-mono text-center placeholder-gray-400 text-lg" placeholder="Authorization Code">
+                <p id="error-msg" class="text-white bg-red-600 px-3 py-2 text-xs mt-3 font-bold hidden uppercase tracking-wider text-center border-2 border-red-800">Access Denied. Invalid Code.</p>
+            </div>
+            
+            <button onclick="checkPassword()" class="w-full btn-terracotta py-4">
+                Enter Studio
+            </button>
+        </div>
+    </div>
+
+    <!-- 📐 Main Application -->
+    <div id="app-view" class="hidden h-full flex flex-col md:flex-row relative z-10">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-80 bg-white border-r-bauhaus flex flex-col z-10 md:h-full flex-shrink-0 relative">
+            <div class="p-8 border-b-bauhaus flex items-center justify-between md:block bg-gray-50">
+                <div>
+                    <h2 class="text-3xl font-black tracking-tighter uppercase leading-none">Drafting<br><span class="text-[#c05621]">Studio</span></h2>
+                    <p class="text-[10px] text-gray-500 mt-4 uppercase tracking-[0.2em] font-bold border-l-2 border-[#c05621] pl-2">Instructor: 龍立偉</p>
+                </div>
+                <button class="md:hidden text-charcoal border-bauhaus p-2 hover:bg-gray-100 transition" onclick="toggleMobileMenu()">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+            <nav id="nav-menu" class="flex-1 overflow-y-auto hidden md:block bg-white">
+                <ul class="flex flex-col h-full">
+                    <li><a href="#" onclick="showSection('home')" id="nav-home" class="nav-item active flex items-center px-8 py-5 text-sm uppercase tracking-wider"><span class="w-8 font-mono text-gray-400">00</span> 課程首頁</a></li>
+                    <li><a href="#" onclick="showSection('unit1')" id="nav-unit1" class="nav-item flex items-center px-8 py-5 text-sm uppercase tracking-wider"><span class="w-8 font-mono text-gray-400">01</span> 建築圖繪製</a></li>
+                    <li><a href="#" onclick="showSection('unit2')" id="nav-unit2" class="nav-item flex items-center px-8 py-5 text-sm uppercase tracking-wider"><span class="w-8 font-mono text-gray-400">02</span> 立面投影對照</a></li>
+                    <li><a href="#" onclick="showSection('unit3')" id="nav-unit3" class="nav-item flex items-center px-8 py-5 text-sm uppercase tracking-wider"><span class="w-8 font-mono text-gray-400">03</span> 建築總剖面圖</a></li>
+                    <li><a href="#" onclick="showSection('unit4')" id="nav-unit4" class="nav-item flex items-center px-8 py-5 text-sm uppercase tracking-wider"><span class="w-8 font-mono text-gray-400">04</span> 防水大樣圖</a></li>
+                    <li><a href="#" onclick="showSection('unit5')" id="nav-unit5" class="nav-item flex items-center px-8 py-5 text-sm uppercase tracking-wider"><span class="w-8 font-mono text-gray-400">05</span> BIM 執行計畫</a></li>
+                    <li><a href="#" onclick="showSection('unit6')" id="nav-unit6" class="nav-item flex items-center px-8 py-5 text-sm uppercase tracking-wider bg-gray-50 border-t border-gray-200"><span class="w-8 font-mono text-[#c05621] font-bold">06</span> 職能評鑑測驗</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto bg-[#fafafa] scroll-smooth relative pb-32">
+            
+            <!-- Unit 00: Home -->
+            <section id="home" class="content-section active min-h-full">
+                <div class="h-[45vh] hero-parallax border-b-bauhaus relative flex items-end p-8 md:p-16">
+                    <div class="absolute inset-0 bg-[#111827]/70"></div>
+                    <div class="relative z-10 text-white w-full max-w-6xl mx-auto">
+                        <p class="text-xs tracking-[0.4em] uppercase mb-4 text-[#c05621] font-bold border-l-2 border-[#c05621] pl-3">Advanced Training Program</p>
+                        <h1 class="text-giant font-black text-white">建築製圖<br><span class="text-gray-300">模型概念與實作</span></h1>
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-16 max-w-6xl mx-auto">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 border-b-bauhaus pb-4">
+                        <h2 class="text-huge font-black tracking-tight">Syllabus Overview</h2>
+                        <span class="text-sm font-bold text-gray-500 uppercase tracking-widest bg-gray-200 px-3 py-1 mt-4 md:mt-0">14 Hours Total</span>
+                    </div>
+                    
+                    <div class="overflow-x-auto shadow-bauhaus bg-white">
+                        <table class="w-full text-left border-collapse spec-table">
+                            <thead>
+                                <tr>
+                                    <th class="p-5 w-1/3">核定單元名稱</th>
+                                    <th class="p-5 text-center w-24">時數</th>
+                                    <th class="p-5">實作核心</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-800 font-medium">
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="p-5 font-bold text-lg">1. 建築圖繪製</td>
+                                    <td class="p-5 text-center font-black text-xl text-[#c05621]">5H</td>
+                                    <td class="p-5 leading-relaxed text-sm">0301平面圖複習CAD指令(3hr)<br><span class="text-gray-500">+ 0305總剖面圖繪製(2hr)</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors bg-gray-100">
+                                    <td class="p-5 font-bold text-lg">2. 大樣圖說繪製</td>
+                                    <td class="p-5 text-center font-black text-xl text-[#c05621]">3H</td>
+                                    <td class="p-5 leading-relaxed text-sm">屋面天溝與女兒牆交接處之防水剖面構造大樣圖實作(3hr)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="p-5 font-bold text-lg">3. 圖說準備-建築</td>
+                                    <td class="p-5 text-center font-black text-xl text-[#c05621]">2H</td>
+                                    <td class="p-5 leading-relaxed text-sm">藉由 0301、0302、0303 建築平面圖解讀投影對照 0304 立面圖(2hr)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors bg-gray-100">
+                                    <td class="p-5 font-bold text-lg">4. 圖說準備-土木</td>
+                                    <td class="p-5 text-center font-black text-xl text-[#c05621]">2H</td>
+                                    <td class="p-5 leading-relaxed text-sm">解讀 0307、0308 結構平面圖，並與建築圖進行疊圖構造識圖(2hr)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="p-5 font-bold text-lg">5. BIM 執行計畫書說明</td>
+                                    <td class="p-5 text-center font-black text-xl text-[#c05621]">2H</td>
+                                    <td class="p-5 leading-relaxed text-sm">導讀施工階段 BEP，將 2D 構造大樣資訊銜接至 3D BIM 元件(2hr)</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors bg-[#111827] text-white">
+                                    <td class="p-5 font-bold text-lg">6. BIM 基礎職能評鑑</td>
+                                    <td class="p-5 text-center font-black text-xl text-[#c05621]">-</td>
+                                    <td class="p-5 leading-relaxed text-sm text-gray-300">40題情境實務測驗，達標解鎖專屬課程結業證書</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unit 01 -->
+            <section id="unit1" class="content-section min-h-full p-8 md:p-16 max-w-6xl mx-auto">
+                <header class="mb-14 border-b-bauhaus pb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <p class="bg-[#c05621] text-white px-3 py-1 font-bold tracking-widest uppercase text-xs">UNIT 01</p>
+                        <p class="text-gray-500 uppercase tracking-widest text-xs font-bold border border-gray-300 px-3 py-1">3 Hours</p>
+                    </div>
+                    <h1 class="text-huge font-black uppercase leading-none tracking-tight text-[#111827]">AutoCAD 基礎指令<br>與壹層平面圖實作</h1>
+                </header>
+
+                <!-- 教學核心與目標 -->
+                <div class="bg-white border-bauhaus p-8 shadow-bauhaus mb-16">
+                    <h3 class="font-black text-xl uppercase mb-4 text-[#c05621] flex items-center"><i class="fa-solid fa-crosshairs mr-3"></i>教學核心與目標</h3>
+                    <ul class="space-y-2 text-[15px] text-gray-800 font-medium">
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 喚醒學生的 AutoCAD 操作記憶，熟悉基礎繪圖與編修指令。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 建立嚴謹的 CNS 建築製圖圖層管理與出圖線寬觀念。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 能獨立完成「0301 壹層平面圖」之結構骨架與門窗放樣。</li>
+                    </ul>
+                </div>
+                
+                <!-- 下載專區: High Contrast Buttons -->
+                <div class="flex flex-wrap gap-5 mb-16 p-8 bg-white border-bauhaus shadow-bauhaus relative">
+                    <div class="absolute -top-3 left-6 bg-white px-2 font-black text-xs uppercase tracking-widest text-gray-500">Resource Assets</div>
+                    <a href="https://drive.google.com/file/d/1XaesuWgTO_BdBQulvpQU92WrnZdohNLz/view?usp=sharing" target="_blank" class="btn-primary px-6 py-4 flex items-center text-sm">
+                        <i class="fa-solid fa-download mr-3 text-lg"></i> AutoCAD 快捷鍵圖表
+                    </a>
+                    <a href="https://drive.google.com/file/d/1wfJz-CM0XC2iHVUkpr6W4ybyNc0DQ-im/view?usp=sharing" target="_blank" class="btn-primary px-6 py-4 flex items-center text-sm">
+                        <i class="fa-solid fa-file-pdf mr-3 text-lg"></i> 建築製圖模型圖
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1d5KY12ThCbdhm0Ge4Tc_XN9eMzFYorWh?usp=sharing" target="_blank" class="btn-primary px-6 py-4 flex items-center text-sm">
+                        <i class="fa-solid fa-folder-open mr-3 text-lg"></i> 電繪用圖下載檔案
+                    </a>
+                </div>
+
+                <div class="space-y-12 bg-white p-8 md:p-12 border-bauhaus">
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 1 小時：1-1 介面引導與 CNS 標準圖層複習</h2>
+                        
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 AutoCAD 基礎環境與輔助繪圖設定</h3>
+                        <p class="mb-4 text-gray-700 text-[15px]">繪圖前，良好的環境設定是提升效率與精確度的關鍵。</p>
+                        <ul class="list-none space-y-3">
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong class="text-[#111827]">圖面範圍與單位：</strong><br>
+                                <span class="text-gray-600 text-[15px]">輸入 <code>LIMITS</code> 指令設定圖紙範圍（如 A2 大小）。輸入 <code>UNITS</code> 指令，將長度類型設為十進位，精確度設為 0，並確保單位為「公分」(cm)。</span>
+                            </li>
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong class="text-[#111827]">狀態列常用輔助功能 (快速鍵)：</strong>
+                                <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600 text-[15px]">
+                                    <li><strong>正交模式 (F8)：</strong> 確保游標只能水平或垂直移動，對於建築平面圖的水平垂直線條繪製至關重要。</li>
+                                    <li><strong>物件鎖點 (F3)：</strong> 繪圖時能精準抓取端點、中點、中心點、交點等幾何特徵點。</li>
+                                    <li><strong>物件鎖點追蹤 (F11)：</strong> 配合物件鎖點，拉出虛線引導線以對齊其他物件點位。</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-10 mb-3 border-b-bauhaus pb-1">二、 丙級標準圖層 (Layer) 與線寬規範建立</h3>
+                        <p class="text-white bg-red-600 font-bold p-3 text-sm mb-6 border-bauhaus shadow-[4px_4px_0px_0px_#111827]"><i class="fa-solid fa-triangle-exclamation mr-2"></i>工程圖面是以「圖層」來區分構造層次，若「圖層未依規定設定、錯誤或遺漏」或「圖元錯置圖層」皆會面臨扣分。請依據規範建立以下核心圖層：</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-charcoal border-bauhaus">
+                            <div class="bg-white p-5 flex items-center"><div class="w-6 h-6 bg-fuchsia-500 mr-4 border border-black"></div><div><strong class="text-[15px]">COLUMN / COL (柱)</strong><br><span class="text-gray-500 text-xs font-mono font-bold">洋紅色(6) / 0.50mm</span></div></div>
+                            <div class="bg-white p-5 flex items-center"><div class="w-6 h-6 bg-yellow-400 mr-4 border border-black"></div><div><strong class="text-[15px]">WALL (牆)</strong><br><span class="text-gray-500 text-xs font-mono font-bold">黃色(2) / 0.35mm</span></div></div>
+                            <div class="bg-white p-5 flex items-center"><div class="w-6 h-6 bg-green-500 mr-4 border border-black"></div><div><strong class="text-[15px]">DW (門窗)</strong><br><span class="text-gray-500 text-xs font-mono font-bold">綠色(3) / 0.15mm</span></div></div>
+                            <div class="bg-white p-5 flex items-center"><div class="w-6 h-6 bg-red-500 mr-4 border border-black"></div><div><strong class="text-[15px]">TEXT (文字)</strong><br><span class="text-gray-500 text-xs font-mono font-bold">紅色(1) / 0.25mm</span></div></div>
+                            <div class="bg-white p-5 flex items-center md:col-span-2"><div class="w-6 h-6 bg-cyan-400 mr-4 border border-black"></div><div><strong class="text-[15px]">DIM (標註)</strong><br><span class="text-gray-500 text-xs font-mono font-bold">青色(4) / 0.15mm</span></div></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 2 小時：1-2 軸線放樣與結構骨架繪製</h2>
+                        <p class="mb-5 text-gray-700 text-[15px]">本節將使用 0301 壹層平面圖為範例，進行建築物的主體結構（柱與牆）放樣。</p>
+
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 繪製結構柱 (COL)</h3>
+                        <ul class="list-none space-y-3 text-[15px] text-gray-700">
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong>建立柱斷面：</strong> 切換至 COL 圖層。試題之柱尺寸為 50×50 cm。輸入「矩形」指令 (<code>RECTANG</code> 或 <code>REC</code>)，指定第一角點後，輸入 <code>@50,50</code> 繪製柱子。
+                            </li>
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong>建立圖塊與放樣：</strong> 將畫好的 50x50 柱子建立為「圖塊」(<code>BLOCK</code> 或 <code>BMAKE</code>)，基準點設定在柱子的正中心。依據題目給定的 X、Y 軸線距離（如 445cm、425cm、305cm 等），使用「偏移複製 (<code>OFFSET</code> / <code>O</code>)」與「線 (<code>LINE</code> / <code>L</code>)」畫出基準網格。使用「複製 (<code>COPY</code> / <code>CO</code>)」或「插入圖塊 (<code>INSERT</code> / <code>I</code>)」將柱子精確放置於各軸線交點上。
+                            </li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 繪製 RC 外牆與隔間磚牆 (WALL)</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">結構力量傳遞的順序是由版、牆傳至梁，再傳至柱。因此牆面多半會對齊柱邊或置中。</p>
+                        <ul class="list-none space-y-3 text-[15px] text-gray-700">
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong>繪製牆線：</strong> 切換至 WALL 圖層。依據 0301 規範：RC外牆厚度為 15 cm，室內 1/2B 磚牆厚度為 12 cm。可使用「線 (<code>LINE</code>)」連接柱子邊緣，再向內或向外「偏移 (<code>OFFSET</code>)」 15cm 或 12cm 產生牆厚。或使用「複線 (<code>MLINE</code>)」指令，設定對正方式（靠上、置中、靠下）與比例（厚度 15），一次畫出牆厚。
+                            </li>
+                            <li class="pl-4 border-l-2 border-[#c05621]">
+                                <strong class="text-[#c05621]">修飾牆柱交接處：</strong> 建築結構體內部應為貫通狀態，請使用「修剪 (<code>TRIM</code> / <code>TR</code>)」指令，將牆與柱子交會處的多餘線段剪除，維持淨空。
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 3 小時：1-3 門窗開口與裝修配置實作</h2>
+                        
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 牆面開口與門窗建立 (DW)</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">建築物外牆開設門窗主要為通風與採光，繪製時需對應精確的尺寸。</p>
+                        <ul class="list-none space-y-3 text-[15px] text-gray-700">
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong>開鑿門窗洞口：</strong> 在畫好的牆面上，依據門窗位置繪製輔助線。依據門窗尺寸（如大門 D1 為 200×240 cm，窗戶 W1 為 250×138 cm），將輔助線偏移複製出開口寬度。使用「修剪 (<code>TRIM</code>)」指令，將牆壁的開口剪開。
+                            </li>
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong>繪製門窗符號：</strong> 切換至 DW 圖層。繪製門框與門扇：一般門框寬度約為牆厚（15cm），門扇厚度繪製約 4~6cm 左右。可使用矩形、圓弧 (<code>ARC</code> / <code>A</code>) 畫出門的開啟軌跡。使用「建立圖塊 (<code>BLOCK</code>)」將完成的門窗命名（如 W1、D1），然後「插入 (<code>INSERT</code>)」至對應的牆壁開口處。
+                            </li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 文字註解與尺度標註 (TEXT & DIM)</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">在工程圖中，標註遺漏或錯誤會導致施工困難，這也是扣分重點。</p>
+                        <ul class="list-none space-y-3 text-[15px] text-gray-700">
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong>文字註解 (TEXT)：</strong> 切換至 TEXT 圖層。使用「多行文字 (<code>MTEXT</code> / <code>T</code>)」或單行文字，將圖名、比例、空間名稱（如客廳、臥室）、門窗編號（D1、W1 等）標示於適當位置。字體高度需依據出圖比例設定（通常圖紙上印出的大小約 3~5mm，若比例尺為 1:100，則 CAD 中字高需設為 30~50 左右）。
+                            </li>
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong>尺度標註 (DIM)：</strong> 切換至 DIM 圖層。使用「線性標註 (<code>DIMLINEAR</code> / <code>DLI</code>)」及「連續標註 (<code>DIMCONTINUE</code> / <code>DCO</code>)」，於圖面外側標示總尺寸、柱心尺寸以及門窗開口位置。
+                            </li>
+                        </ul>
+                        
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">三、 單元總結與課後作業</h3>
+                        <ul class="list-none space-y-3 text-[15px] text-gray-700">
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong>出圖檢查：</strong> 檢查是否圖元畫在錯誤的圖層（例如不小心把牆壁畫在門窗層），若是，請選取該物件並於性質面板修改圖層。
+                            </li>
+                            <li class="pl-4 border-l-2 border-gray-300">
+                                <strong>存檔規範：</strong> 請將完成的 0301 壹層平面圖，依據考場習慣，以「<strong>試場現地編號.dwg</strong>」作為檔名存檔。這張圖將成為我們後續單元「投影立面圖」與「剖面圖」的重要底圖依據！
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unit 02 -->
+            <section id="unit2" class="content-section min-h-full p-8 md:p-16 max-w-6xl mx-auto">
+                <header class="mb-14 border-b-bauhaus pb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <p class="bg-[#c05621] text-white px-3 py-1 font-bold tracking-widest uppercase text-xs">UNIT 02</p>
+                        <p class="text-gray-500 uppercase tracking-widest text-xs font-bold border border-gray-300 px-3 py-1">3 Hours</p>
+                    </div>
+                    <h1 class="text-huge font-black uppercase leading-none tracking-tight text-[#111827]">圖面投影解讀<br>與立面圖推導</h1>
+                </header>
+
+                <div class="bg-white border-bauhaus p-8 shadow-bauhaus mb-16">
+                    <h3 class="font-black text-xl uppercase mb-4 text-[#c05621] flex items-center"><i class="fa-solid fa-crosshairs mr-3"></i>教學核心與目標</h3>
+                    <ul class="space-y-2 text-[15px] text-gray-800 font-medium">
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 屏除「看著立面圖抄立面圖」的錯誤習慣。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 建立從 0307、0301、0302、0308、0303 等五張平面圖說循序漸進推導的邏輯。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 透過「垂直投影」掌握建築外觀包覆結構骨架推導出 0304 立面圖的標準作業程序 (SOP)。</li>
+                    </ul>
+                </div>
+
+                <!-- 按鈕區確保高對比 -->
+                <div class="flex flex-wrap gap-5 mb-16 p-8 bg-white border-bauhaus shadow-bauhaus relative">
+                    <div class="absolute -top-3 left-6 bg-white px-2 font-black text-xs uppercase tracking-widest text-gray-500">Resource Assets</div>
+                    <a href="https://autode.sk/4gX8cz5" target="_blank" class="btn-primary px-6 py-4 flex items-center text-sm">
+                        <i class="fa-solid fa-vr-cardboard mr-3 text-lg"></i> 基礎 3D 建模參考
+                    </a>
+                    <a href="https://autode.sk/4ulxxGx" target="_blank" class="btn-primary px-6 py-4 flex items-center text-sm">
+                        <i class="fa-solid fa-cube mr-3 text-lg"></i> 進階 3D 建模參考
+                    </a>
+                </div>
+
+                <div class="space-y-12 bg-white p-8 md:p-12 border-bauhaus">
+                    <div class="timeline-box">
+                        <h2 class="text-xl font-black uppercase mb-4 text-[#c05621]">第一階段：建立骨架與高度基準 (使用 0307 結構平面)</h2>
+                        <p class="text-sm font-bold bg-gray-100 p-3 border-l-4 border-[#111827] mb-4">教學目的： 建築外觀必須依附於土木結構之上。先定出柱子邊界與各樓層高度，才能確保後續投影不偏移。</p>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>解讀 0307 (壹至伍層結構平面)：</strong> 引導學生觀察 0307 圖面，確認建築物最外圍的結構柱 (COL) 位置。將 0307 建立為圖塊並插入作圖區上方，作為垂直投影的第一層基準。</li>
+                            <li><strong>繪製垂直投影線與水平高度線 (GL/FL)：</strong> 開啟正交模式 (F8)，使用建構線 (<code>XLINE</code>) 從 0307 的外側柱邊垂直向下拉出投影線。繪製水平基準線：先畫出地面線 (GL)，接著依序往上偏移 (<code>OFFSET</code>) 出各樓地板線 (FL)。</li>
+                            <li><strong>高度設定重點：</strong> 依據修正後的試題規範，1FL 往上偏移 <strong>420 cm</strong> 產生 2FL，接著 2FL 連續往上偏移 <strong>300 cm</strong> 產生 3FL、4FL、5FL 及屋頂層 (RFL)。</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-xl font-black uppercase mb-4 text-[#c05621]">第二階段：壹層立面放樣 (使用 0301 建築平面)</h2>
+                        <p class="text-sm font-bold bg-gray-100 p-3 border-l-4 border-[#111827] mb-4">教學目的： 將 1F 的建築裝修（外牆厚度、門窗開口）包覆在結構骨架上。</p>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>疊圖對照與投影：</strong> 將 0301 (壹層平面圖) 插入並精準疊合於 0307 的上方。學生會發現建築外牆 (15cm) 包含了外層的粉刷裝修層，會比純結構柱稍微往外推。從 0301 的外牆轉角、雨遮、陽台邊緣，向下拉出新的垂直投影線。</li>
+                            <li><strong>繪製 1F 門窗與外觀細節：</strong> 依據 0301 平面圖顯示的開口位置（如大門、落地窗），在 GL 與 2FL 之間修剪出對應的開口。將預先建好的 1F 門窗圖塊（如 200×240 cm 的大門、雨遮版 140×80×12 cm）插入正確位置。</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-xl font-black uppercase mb-4 text-[#c05621]">第三階段：標準層立面放樣 (使用 0302 貳至伍層平面)</h2>
+                        <p class="text-sm font-bold bg-gray-100 p-3 border-l-4 border-[#111827] mb-4">教學目的： 利用標準層高度重複的特性，完成建築主體二到五樓的外觀推導。</p>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>貳至伍層外觀投影：</strong> 將 0302 (貳至伍層平面圖) 插入疊合至基準點上。從 0302 向下拉出二樓特有的陽台輪廓、冷氣窗台版 (80×50×10 cm) 及窗戶邊界投影線。</li>
+                            <li><strong>繪製 2F 立面並向上複製：</strong> 在 2FL 與 3FL 之間（高度 300cm），將 2F 的外牆輪廓、冷氣孔與門窗繪製完成。</li>
+                            <li><strong class="text-[#c05621]">關鍵技巧：</strong> 由於二至五樓的平面圖 (0302) 是共用的，立面圖在繪製完二樓後，即可使用「複製 (<code>COPY</code>)」指令，以樓板交會點為基準，依序向上複製出三、四、五樓的外觀，大幅提升繪圖效率。</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-xl font-black uppercase mb-4 text-[#c05621]">第四階段：屋頂結構與屋突層放樣 (使用 0308 + 0303)</h2>
+                        <p class="text-sm font-bold bg-gray-100 p-3 border-l-4 border-[#111827] mb-4">教學目的： 處理建築物最頂端的結構收頭、女兒牆與水塔設備。</p>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>確認屋頂結構邊界 (使用 0308 屋頂結構)：</strong> 插入 0308 圖塊。屋頂結構圖決定了女兒牆的結構基礎位置。從 0308 投影出女兒牆的垂直結構線。</li>
+                            <li><strong>屋突層與設施繪製 (使用 0303 屋頂及屋突平面)：</strong> 插入 0303 圖塊疊加於上。從 0303 向下投影出「樓梯屋突層」的外牆、突出物、不鏽鋼爬梯以及水塔的水平位置。依據高度規範完成屋頂女兒牆、屋脊裝飾、水塔格柵等頂部細節。</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-xl font-black uppercase mb-4 text-[#c05621]">第五階段：圖說完善與導出 (完成 0304 立面圖)</h2>
+                        <p class="text-sm font-bold bg-gray-100 p-3 border-l-4 border-[#111827] mb-4">教學目的： 統整所有投影下來的線條，完成符合規範的出圖標準。</p>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>修剪與材質標示：</strong> 清除所有從 0301~0308 拉下來的輔助投影線。切換至 MATERIAL 圖層（顏色11），使用填充線（<code>HATCH</code>）為建築外牆加上磁磚或裝修材質表現。</li>
+                            <li><strong>尺寸與文字標註：</strong> 切換至 DIM 圖層，於圖面右方標註各樓層高度（如 420、300 等垂直尺寸）與總高度。切換至 TEXT 圖層，標註「正向立面圖（或各向立面圖）」圖名與比例尺 (1:100)，以及外牆材質說明的多重引線。</li>
+                        </ul>
+                        
+                        <div class="mt-6 bg-[#111827] text-white p-6 border-l-4 border-[#c05621]">
+                            <strong class="uppercase tracking-widest text-[#c05621] text-sm block mb-2">單元總結</strong>
+                            <p class="text-gray-300 text-[15px] leading-relaxed">透過「0307 ➡️ 0301 ➡️ 0302 ➡️ 0308 ➡️ 0303」的先後疊圖與垂直向下投影順序，我們不靠死背就精準還原了 0304 立面圖的真實樣貌，這就是業界「由平面長出立體」的標準繪圖邏輯！</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unit 03 -->
+            <section id="unit3" class="content-section min-h-full p-8 md:p-16 max-w-6xl mx-auto">
+                <header class="mb-14 border-b-bauhaus pb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <p class="bg-[#c05621] text-white px-3 py-1 font-bold tracking-widest uppercase text-xs">UNIT 03</p>
+                        <p class="text-gray-500 uppercase tracking-widest text-xs font-bold border border-gray-300 px-3 py-1">3 Hours</p>
+                    </div>
+                    <h1 class="text-huge font-black uppercase leading-none tracking-tight text-[#111827]">建築總剖面圖<br>繪製實作</h1>
+                </header>
+
+                <div class="bg-white border-bauhaus p-8 shadow-bauhaus mb-16">
+                    <h3 class="font-black text-xl uppercase mb-4 text-[#c05621] flex items-center"><i class="fa-solid fa-crosshairs mr-3"></i>教學核心與目標</h3>
+                    <ul class="space-y-2 text-[15px] text-gray-800 font-medium">
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 將學生的思維由「外部立面投影」帶入「內部垂直剖切」，瞭解總剖面圖的意義與功能。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 訓練學生透過平面圖上的剖切線，精準判讀「被切斷的結構體」與「未切斷但被看見的投影面」。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 熟悉建築構造的銜接邏輯（版、梁、柱、牆的交會關係），並獨立完成 0305 總剖面圖實作。</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-12 bg-white p-8 md:p-12 border-bauhaus">
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 1 小時：3-1 剖面圖觀念建立與基礎骨架放樣</h2>
+                        <p class="mb-4 text-sm text-gray-600">立面圖只能看見建築物華麗的外表，而剖面圖則是建築物的 X 光片，能清晰顯示出內部空間的高度與構造厚度。</p>
+
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 剖面圖的圖學原理與識圖</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>總剖面圖定義：</strong> 平行建築物的高度軸垂直切開，移去前半部構造後所繪製出的正投影圖。</li>
+                            <li><strong>剖切路線解讀 (以 0305 試題為例)：</strong> 要求學生拿出 0301 (壹層平面圖)，沿著剖切線由左向右觀察：
+                                <ul class="list-none pl-4 space-y-1 mt-1 border-l-2 border-gray-300">
+                                    <li><strong>切過的部位 (重線)：</strong> 陽台外牆 ➡️ 辦公室外牆 ➡️ D4 門 ➡️ 主管室隔間牆 ➡️ DW2 窗 ➡️ 後陽台。</li>
+                                    <li><strong>看見的部位 (輕線)：</strong> 剖切線前方的門、窗或牆面投影。</li>
+                                </ul>
+                            </li>
+                            <li><strong>構造梁 (G) 與非構造梁 (b) 辨識：</strong> 通過柱中心線的為主結構大梁 (G)；未通過柱心、位於兩柱之間的為非構造小梁 (b)。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 剖面圖專屬圖層與線寬設定 (重要考點)</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">在剖面圖中，「切到」與「看到」的線條粗細有著嚴格的國家標準規定，圖層設定錯誤將導致嚴重扣分：</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-charcoal border-bauhaus mt-4">
+                            <div class="bg-white p-4"><strong class="text-[#c05621] uppercase">SECTION (構造體剖線)</strong><br><span class="text-gray-600 text-[15px] mt-1 block">被切斷的 RC 結構體，顏色設為黃色 (2)，線寬最粗 0.40mm (或 0.50mm)。</span></div>
+                            <div class="bg-white p-4"><strong class="text-[#111827] uppercase">PROJECT (構造體投影線)</strong><br><span class="text-gray-600 text-[15px] mt-1 block">沒被切斷但看見的結構體邊界，顏色 171，線寬 0.25mm。</span></div>
+                            <div class="bg-white p-4"><strong class="text-gray-500 uppercase">FINISH (粉刷線)</strong><br><span class="text-gray-600 text-[15px] mt-1 block">建築表面的裝修厚度，顏色 9，線寬 0.15mm。</span></div>
+                        </div>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">三、 高程基準與基礎結構 (筏基) 繪製</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>繪製高度基準線 (GL/FL)：</strong> 畫出地面線 (GL)，接著利用偏移 (<code>OFFSET</code>) 定出各樓層線：1FL (+420cm)、2FL至5FL及RFL (+300cm)。</li>
+                            <li><strong>繪製基礎版與地梁：</strong> 依據尺寸表，基礎版厚度為 <strong>50cm</strong>，並在下方打 <strong>10cm</strong> 厚的 PC (混凝土墊層)。繪製筏基構造的地梁 (如 FB0、FB2、FG2 等)，並使用倒角工具修剪交線部位。</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 2 小時：3-2 壹層與標準層 (貳層) 剖面構造實作</h2>
+                        <p class="mb-4 text-sm text-gray-600">結構力量的傳遞順序是：版 (S) ➡️ 牆 (W) 或小梁 (B) ➡️ 大梁 (G) ➡️ 柱 (C) ➡️ 基礎 (F)。因此，繪製剖面時要特別注意它們的銜接與對齊關係。</p>
+                        
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 壹層 (1F) 剖面繪製</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>梁版繪製：</strong> 1F 樓版厚度為 <strong>15 cm</strong>。依據尺寸表：1F 構造梁為 <strong>40×160 cm</strong>，非構造梁為 <strong>35×160 cm</strong>。將梁放置於對應的柱位或跨距位置。</li>
+                            <li><strong>牆體繪製 (區分牆厚)：</strong> 外側 RC 牆厚度為 <strong>15 cm</strong>，內部隔間磚牆厚度為 <strong>12 cm</strong>。<strong class="text-[#111827]">對齊原則：</strong>牆體通常會對齊梁的邊緣（置中、靠左或靠右），利用梁邊線向下偏移出牆壁厚度。</li>
+                            <li><strong>開口部與細節：</strong> 在牆面上修剪出門窗開口（如 D4 門高度 215cm、DW2 窗高度 250cm），並畫上對應的立面投影線或剖面框。繪製 1F 外部突出的雨遮版 (140×80×12 cm)。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 貳層 (2F) 標準層剖面繪製</h3>
+                        <div class="bg-[#111827] text-white p-5 border-bauhaus mb-4">
+                            <strong class="text-[#c05621] block mb-2 uppercase tracking-widest"><i class="fa-solid fa-triangle-exclamation mr-2"></i>梁版尺寸變更 (易錯陷阱)</strong>
+                            <ul class="list-disc pl-5 text-gray-300 text-[15px] space-y-1">
+                                <li>2F 以上的樓版厚度變薄為 <strong>12 cm</strong>。</li>
+                                <li>2F 構造梁變更為 <strong>35×60 cm</strong>，非構造梁為 <strong>30×60 cm</strong>。要求學生務必依照尺寸表精確放樣，不可直接沿用 1F 尺寸。</li>
+                            </ul>
+                        </div>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>陽台與冷氣窗台版繪製：</strong> 繪製 2F 的陽台底板及高度 110cm、厚度 10cm 的陽台牆。放置冷氣窗台版 (80×50×10 cm)，其位置算法為：樓高 300 - 梁深 - 冷氣開口高度 60 - 窗台版厚度 10。</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 3 小時：3-3 標準層向上複製、屋突成型與材質標註</h2>
+                        <p class="mb-4 text-sm text-gray-600">利用 AutoCAD 強大的編修功能，將標準層快速複製，並完成屋頂收頭與細部材質圖例。</p>
+
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 標準層陣列複製與「梁深修正」</h3>
+                        <ul class="list-disc pl-5 space-y-3 text-[15px] text-gray-700">
+                            <li><strong>向上複製 (COPY)：</strong> 選取完成的 2F 樓板、牆體、門窗及陽台（使用 SECTION 與 PROJECT 圖層的物件）。以樓地板線為基準點，依序向上複製至 3F、4F、5F。</li>
+                            <li class="bg-red-50 p-4 border-l-4 border-red-600 text-red-900 font-bold">
+                                梁深修正 (魔王考點)：根據 0305 試題規範，3F~RF 的構造梁尺寸縮小為 35×50 cm（2F 為 35×60 cm）。要求學生務必將 3F、4F、5F、RF 的梁底線向上拉提 10cm，並修剪多餘的牆體線條。這個細節是評分的重點！
+                            </li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 屋頂 (RFL) 與屋突層繪製</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>女兒牆與屋頂收頭：</strong> 繪製頂樓的 RC 女兒牆與壓頂裝飾。</li>
+                            <li><strong>不鏽鋼爬梯繪製：</strong> 切換至 OTHER 圖層，繪製通往水塔的爬梯。注意規範尺寸：支撐架間距 100cm (使用 2"Ø 鋼管)、爬梯踏階間距 35cm (使用 1 1/4"Ø 鋼管)。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">三、 剖面材料填充 (Hatch) 與圖面完善</h3>
+                        <p class="mt-2 text-[15px] text-gray-700 mb-3">當所有的結構輪廓 SECTION 皆已封閉閉合後，即可進行材質填充，賦予圖面靈魂：</p>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>RC 結構填充：</strong> 切換至 HATCH 圖層 (顏色 11，0.13mm)。使用填充線指令 (<code>HATCH</code>)，選擇 <code>AR-CONC</code> (混凝土圖例)，為被剖切到的柱、梁、版、牆打上材質。</li>
+                            <li><strong>土壤填充：</strong> 切換至 EARTH 圖層，在基礎底板及兩側繪製土壤圖例 (通常使用 <code>ANSI31</code> 斜線搭配適當角度與比例)。</li>
+                            <li><strong>尺寸與文字標註：</strong> 切換至 DIM 圖層，於圖面兩側標註各樓層高度、門窗高度與總高度。切換至 TEXT 圖層，標註各空間名稱（如：客廳、主臥室）、圖名「總剖面圖」與比例尺 S=1:100。</li>
+                        </ul>
+
+                        <div class="mt-8 bg-gray-100 p-6 border-l-4 border-[#111827]">
+                            <strong class="uppercase font-bold text-sm tracking-widest text-[#111827]"><i class="fa-solid fa-chalkboard-user mr-2 text-[#c05621]"></i> 課後檢核要求</strong>
+                            <p class="mt-2 text-[15px] text-gray-700">請學生關閉 PROJECT 等投影與文字圖層，只留下 SECTION (黃色) 圖層，檢查整棟建築物的「柱、梁、版、牆」是否已經完全打通融合為一個一體成型的 RC 構造骨架，若有未修剪乾淨的十字交叉線，請立即使用 TRIM 修剪乾淨！</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unit 04 -->
+            <section id="unit4" class="content-section min-h-full p-8 md:p-16 max-w-6xl mx-auto">
+                <header class="mb-14 border-b-bauhaus pb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <p class="bg-[#c05621] text-white px-3 py-1 font-bold tracking-widest uppercase text-xs">UNIT 04</p>
+                        <p class="text-gray-500 uppercase tracking-widest text-xs font-bold border border-gray-300 px-3 py-1">3 Hours</p>
+                    </div>
+                    <h1 class="text-huge font-black uppercase leading-none tracking-tight text-[#111827]">屋面天溝與女兒牆<br>防水構造大樣圖</h1>
+                </header>
+
+                <div class="bg-white border-bauhaus p-8 shadow-bauhaus mb-16">
+                    <h3 class="font-black text-xl uppercase mb-4 text-[#c05621] flex items-center"><i class="fa-solid fa-crosshairs mr-3"></i>教學核心與目標</h3>
+                    <ul class="space-y-2 text-[15px] text-gray-800 font-medium">
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 宏觀到微觀的視角轉換：訓練由總剖面圖（0305）深入最微觀的局部細部，專注繪製大樣圖。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 構造層次與材質解析：教導辨識結構體（RC骨架）、粉刷裝修層以及防水層的相對關係。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 進階標註與 BIM 銜接：熟練 HATCH 與 MLEADER 指令，將 2D 材料厚度銜接至 3D 複合牆元件。</li>
+                    </ul>
+                </div>
+
+                <!-- 大樣圖 iframe -->
+                <div class="mb-16 border-bauhaus bg-gray-50 p-3 shadow-bauhaus">
+                    <div class="relative w-full overflow-hidden border border-gray-300 bg-white" style="padding-top: 60%;">
+                        <iframe src="https://drive.google.com/file/d/1LYcLarBFk0nviSh6b0FflfpsiKi9dxYF/preview" class="absolute top-0 left-0 w-full h-full border-0" allow="autoplay"></iframe>
+                    </div>
+                    <p class="text-center text-[10px] uppercase tracking-[0.2em] text-gray-600 mt-4 font-bold">Fig 01. 屋面天溝與女兒牆交接防水大樣圖</p>
+                </div>
+
+                <div class="space-y-12 bg-white p-8 md:p-12 border-bauhaus">
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 1 小時：4-1 空間定位與 RC 結構骨架放樣</h2>
+                        <p class="mb-4 text-[15px] text-gray-700">大樣圖（局部詳圖）通常最為抽象，因此教學首重「空間定位」，必須讓學生明白這張圖在整棟建築中的確切位置。</p>
+
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 圖片識圖剖析與空間對照</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>尋找斷面位置：</strong> 帶領學生打開單元一與單元三畫好的 0303（屋頂平面圖）邊緣與 0305（剖面圖）的最頂端，用檢視框標出天溝與女兒牆的交接位置。</li>
+                            <li><strong>幾何比例設定：</strong> 說明大樣圖是平面圖與剖面圖的「顯微鏡放大版」，引導學生將比例尺放大（如 1:10 或 1:20）以進行精細放樣。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 核心 RC 結構輪廓放樣 (SECTION)</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">結構體是整張圖面的骨幹，必須精確繪製其尺寸。</p>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>圖層設定：</strong> 強調構造體切斷線必須切換至 SECTION 圖層，顏色設定為黃色，並賦予 0.40mm 的粗線寬，以強烈對比出結構體的厚實感。</li>
+                            <li><strong>尺寸放樣 (依據圖面)：</strong>
+                                <ul class="list-none pl-4 space-y-1 mt-1 border-l-2 border-gray-300">
+                                    <li>使用建構線 (<code>XLINE</code>) 或偏移 (<code>OFFSET</code>) 抓出基礎結構線。</li>
+                                    <li>繪製厚度為 <strong>150 mm (15 cm)</strong> 的屋頂 RC 樓板與 <strong>150 mm (15 cm)</strong> 厚的女兒牆 RC 結構體。</li>
+                                    <li>繪製天溝的凹槽寬度，依據圖面尺寸設定為 <strong>250 mm</strong>，並預留下方梁版交接處 <strong>100+100 mm</strong> 的相關幾何位置。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 2 小時：4-2 構造剖面圖例與防水粉刷層實作</h2>
+                        <p class="mb-4 text-[15px] text-gray-700">本階段重點在於破除學生對建築牆面「只有一條線」的誤解，拆解出防水與裝修的真實厚度與材質表現。</p>
+
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 材料圖例填充 (Hatch) 實作</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">結構體輪廓封閉後，需依據 CNS 標準填入對應的材質圖例。</p>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>RC 鋼筋混凝土：</strong> 指導學生點選 HATCH 指令，選擇混凝土圖例（如 Dots+Angles 或 <code>AR-CONC</code>），填充於 150mm 厚的女兒牆與樓板結構體內。</li>
+                            <li><strong>壓頂磚牆：</strong> 針對女兒牆頂部的構造，練習使用 <code>ANSI31</code> (斜線) 圖例來表示磚牆材質。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 防水與粉刷裝修層繪製 (OFFSET 應用)</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">在 2D CAD 中，裝修層是依附在結構體外側的厚度。</p>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>偏移構造線：</strong> 帶領學生利用 <code>OFFSET</code> 指令，從 RC 結構面向外偏移畫出外層的構造線，包含水泥砂漿打底、防水層、粉刷層等細部層次。</li>
+                            <li><strong>洩水坡度放樣：</strong> 依據大樣圖面標示，在天溝與屋面交接處，利用輔助線繪製出 <strong>1 : 2.5</strong> 的洩水坡度（或斜面找坡），確保圖面符合排水邏輯。</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 3 小時：4-3 多重引線標註與 BIM 觀念銜接</h2>
+                        <p class="mb-4 text-[15px] text-gray-700">大樣圖的價值在於清晰明確的材料指示。最後一小時將完成圖面文字標註，並進行 2D 轉 3D 的觀念昇華。</p>
+
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 多重引線 (MLEADER) 與文字標註</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>引線指向與排版：</strong> 運用 <code>MLEADER</code> (多重引線) 指令，將引線箭頭精確指向對應的防水裝修材料層，並要求學生練習圖面字體的美化與排版對齊。</li>
+                            <li><strong>輸入關鍵材料規範：</strong> 檢查文字圖層是否正確設定為 TEXT（紅色，0.25mm粗細），並依據圖面精確打上構造文字說明，例如：
+                                <ul class="list-none pl-4 space-y-1 mt-1 border-l-2 border-gray-300">
+                                    <li>「聚合物水泥砂漿分兩次粉刷」。</li>
+                                    <li>「一布二塗防水塗膜附加層」。</li>
+                                </ul>
+                            </li>
+                            <li>強調評分規範中，文字大小必須清晰且圖層不可錯置漏設，以免面臨扣分。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 課程總結：2D 大樣圖與 3D BIM 資訊銜接</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">在親手畫完繁雜的偏移線條後，為下一個單元埋下完美的伏筆。</p>
+                        <div class="mt-4 bg-[#111827] text-white p-6 border-l-4 border-[#c05621]">
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300 text-[15px]">
+                                <li><strong>觀念轉換引導：</strong> 拿著剛畫完的女兒牆與天溝大樣圖向學生說明，在 AutoCAD 裡，防水層和粉刷層是我們用 <code>OFFSET</code> 一根一根偏移出來的線條。</li>
+                                <li><strong>BIM 屬性對照：</strong> 告訴學生，未來進入 3D BIM 軟體（如 Revit）中，女兒牆將被定義為一個「複合牆元件 (Compound Wall)」，而天溝則屬於「屋頂邊緣元件」。</li>
+                                <li><strong>Data 資訊化：</strong> 今天我們用文字標註的「聚合物水泥砂漿」或「防水塗膜」等材料名稱與幾何厚度，在 BIM 模型中都會轉變成元件屬性裡的「非圖像資訊（Data）」欄位（如主要材料、長度、體積等）。這個對比將幫助新生瞬間頓悟從 2D 繪圖進化到 3D 資訊模型（LOD 300）的產業價值。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unit 05 -->
+            <section id="unit5" class="content-section min-h-full p-8 md:p-16 max-w-6xl mx-auto">
+                <header class="mb-14 border-b-bauhaus pb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <p class="bg-[#c05621] text-white px-3 py-1 font-bold tracking-widest uppercase text-xs">UNIT 05</p>
+                        <p class="text-gray-500 uppercase tracking-widest text-xs font-bold border border-gray-300 px-3 py-1">2 Hours</p>
+                    </div>
+                    <h1 class="text-huge font-black uppercase leading-none tracking-tight text-[#111827]">BIM 執行計畫書<br>與 2D/3D 資訊銜接</h1>
+                </header>
+
+                <div class="bg-white border-bauhaus p-8 shadow-bauhaus mb-16">
+                    <h3 class="font-black text-xl uppercase mb-4 text-[#c05621] flex items-center"><i class="fa-solid fa-crosshairs mr-3"></i>教學核心與目標</h3>
+                    <ul class="space-y-2 text-[15px] text-gray-800 font-medium">
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 觀念昇華：理解 BIM 中的「I (Information 資訊)」如何取代傳統 2D CAD 中的純幾何線條。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> BEP 實務解讀：透過實際的 BEP 了解專案團隊組織、檔案命名、座標系統及色彩計畫等業界規範。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-play text-xs mt-1 mr-3 text-[#111827]"></i> 流程與品管：認識 3D 碰撞檢查與三級品質管理機制，體會 BIM 減少施工錯誤的價值。</li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-wrap gap-5 mb-16 p-8 bg-white border-bauhaus shadow-bauhaus relative">
+                    <div class="absolute -top-3 left-6 bg-white px-2 font-black text-xs uppercase tracking-widest text-gray-500">Resource Assets</div>
+                    <a href="https://drive.google.com/file/d/1xDHvXhD3ddHFxN4bU1s7L7zYeEpJx0Jw/view?usp=sharing" target="_blank" class="btn-primary px-8 py-5 flex items-center text-sm w-full md:w-auto justify-center">
+                        <i class="fa-solid fa-file-pdf mr-3 text-xl"></i> 下載 BIM工作計畫書(BEP)
+                    </a>
+                </div>
+
+                <div class="space-y-12 bg-white p-8 md:p-12 border-bauhaus">
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 1 小時：5-1 從 2D 跨入 BIM 領域與 BEP 專案組織</h2>
+                        <p class="mb-4 text-[15px] text-gray-700">本節將打破學生過去 11 個小時「畫線成圖」的習慣，導入 BIM「建立參數化元件」的革命性觀念，並介紹規範整個 BIM 專案運作的憲法——BEP。</p>
+
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 2D CAD 與 3D BIM 的資訊銜接 (Information)</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>回顧單元四的大樣圖：</strong> 在 AutoCAD 中，防水層與隔熱層是我們用 OFFSET 一條一條偏移出來的「線條」。</li>
+                            <li><strong>BIM 的觀念轉換：</strong> 在 BIM 軟體中，牆或樓板是一個「具備屬性的 3D 元件」。軟體會自動生成 3D 模型並精準切出 2D 剖面大樣。</li>
+                            <li><strong>附加資訊：</strong> 說明 LOD 300 要求元件需附帶非圖像資訊，例如材料名稱、維護年限、檢查頻率等。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 什麼是 BEP (BIM Execution Plan)？</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>定義：</strong> BEP 是 BIM 執行計畫書，用來確保業主、設計、施工端在同一個標準下建立與應用 BIM 模型。</li>
+                            <li><strong>BIM 計畫目標：</strong> 施工階段的目標包含：依發包圖說建置 BIM 模型、進行整合碰撞檢查、3D 視覺化模擬以解決專業工程界面衝突，以及 4D 工程進度與工序模擬。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">三、 BIM 人員組織與角色職責</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">一個龐大的工程需要團隊分工：</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-charcoal border-bauhaus mt-4">
+                            <div class="bg-white p-5"><strong class="uppercase text-lg mb-1 block">1. BIM 經理</strong><span class="text-gray-600 text-sm">負責 BEP 的擬定、落實流程管控，並主導最高層級的品質控制與協調決策。</span></div>
+                            <div class="bg-white p-5"><strong class="uppercase text-lg mb-1 block">2. BIM 協調員</strong><span class="text-gray-600 text-sm">負責整合設計單位與分包商，應用 BIM 進行施工排程與 2D 產出，負責審核施工模型。</span></div>
+                            <div class="bg-white p-5"><strong class="uppercase text-lg mb-1 block text-[#c05621]">3. BIM 建模員</strong><span class="text-gray-800 text-sm font-bold">最基礎執行者，負責建置模型，並對自己的模型進行第一線的「自主檢查 (一級品質管理)」。</span></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 2 小時：5-2 建模準則、命名規範與 LOD</h2>
+                        <p class="mb-4 text-[15px] text-gray-700">為了解決百人團隊協同作業可能產生的混亂，BEP 制定了嚴格的「共同語言」。本節將指導學生如何遵守這些業界法則。</p>
+
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 嚴謹的檔案命名與 LOD 300 規範</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>檔案命名原則：</strong> 避免拿到錯誤版本的模型，檔名必須具備邏輯。規則：<code>階段代碼_標的代碼_專業系統_版次</code>。範例：<code>U_A_AR_01</code> 代表「施工階段 (U)」「進流抽水站 (A)」「建築專業系統 (AR)」_「第 01 版」。</li>
+                            <li><strong>LOD 300：</strong> 本專案要求模型發展程度須達 LOD 300，意味著元件必須包含精確的數量、尺寸、形狀、位置及非圖像資訊。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 座標系統與單位精度 (極度重要)</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>座標統合：</strong> 講解 BIM 整合了土木、建築、機電模型，若原點不同，模型將無法套疊。本案規範採用「TWD97 座標系統」，並以特定的測量點（GP02）為專案基準點。</li>
+                            <li><strong>專案高程：</strong> 規定以 EL+3.0m 為整體專案基準面，不可任意變動。</li>
+                            <li><strong>單位設定：</strong> 土木、建築及敷地模型採用公分 (cm)；機電模型則採用公厘 (mm) 計算至整數。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">三、 管線色彩計畫 (Color Coding)</h3>
+                        <p class="mt-2 text-[15px] text-gray-700 mb-3">在複雜的機電 (MEP) 模型中，為方便碰撞檢查與視覺辨識，BEP 規定了各系統的 RGB 三原色碼：</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
+                            <div class="border border-[#111827] p-4 text-center bg-white shadow-[2px_2px_0px_0px_#111827]"><strong class="text-red-600 text-lg">消防系統 (FF)</strong><br><span class="text-xs font-mono font-bold">R=255, G=0, B=0</span></div>
+                            <div class="border border-[#111827] p-4 text-center bg-white shadow-[2px_2px_0px_0px_#111827]"><strong class="text-blue-600 text-lg">給水冷水管 (CW)</strong><br><span class="text-xs font-mono font-bold">R=0, G=0, B=255</span></div>
+                            <div class="border border-[#111827] p-4 text-center bg-white shadow-[2px_2px_0px_0px_#111827]"><strong class="text-blue-900 text-lg">電力系統 (ET)</strong><br><span class="text-xs font-mono font-bold">R=0, G=40, B=150</span></div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-3 font-bold border-l-2 border-gray-300 pl-3">連帶說明：土木結構 (ST) 與建築 (AR) 作為背景，會被設定為灰色調 (如 RGB 166,166,166) 以凸顯機電管線。</p>
+                    </div>
+
+                    <div class="timeline-box">
+                        <h2 class="text-2xl font-black uppercase mb-6 bg-[#111827] text-white inline-block px-4 py-2">第 3 小時：5-3 協同作業、碰撞檢查與品質管理</h2>
+                        <p class="mb-4 text-[15px] text-gray-700">最後一小時，將展示 BIM 最大的威力——在電腦裡把房子「蓋一次」，把錯誤在施工前抓出來。</p>
+
+                        <h3 class="font-bold text-lg mt-6 mb-3 border-b-bauhaus pb-1">一、 雲端協同作業流程</h3>
+                        <p class="text-[15px] text-gray-700">模型建置與修改需透過「網路儲存伺服器 (雲端平台)」進行。建模員將模型上傳後，以 E-mail 通知專案團隊下載，如有圖面釋疑則提出需求待設計單位解決後再修正模型。</p>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">二、 碰撞檢查 (Clash Detection)</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-[15px] text-gray-700">
+                            <li><strong>BIM 怎麼做：</strong> 碰撞檢查的主要對象包含機電管線與土木結構梁柱之間。透過軟體自動運算這些空間衝突。</li>
+                            <li><strong>衝突解決方案：</strong> 對於可能導致窒礙難行的項目，需提出「衝突檢核表」，經協調會議決定如何繞管、穿梁，再回去修正 3D 模型。</li>
+                        </ul>
+
+                        <h3 class="font-bold text-lg mt-8 mb-3 border-b-bauhaus pb-1">三、 三級品質管理機制 (QA/QC)</h3>
+                        <p class="mt-2 text-sm text-gray-600 mb-3">為確保模型準確度，BIM 導入了嚴謹的三層把關機制：</p>
+                        <ul class="list-decimal pl-5 space-y-3 text-[15px] text-gray-700">
+                            <li><strong class="text-[#111827]">一級品管 (自主檢查)：</strong> 由「BIM 建模員」執行。畫完圖後，必須檢查建置元件之正確性，填寫自主檢查表後才能交出檔案。</li>
+                            <li><strong class="text-[#111827]">二級品管 (校核與整合)：</strong> 由「BIM 建模專案負責人」執行。負責進行建築、結構及機電系統的 3D 整合套圖，並逐步排除碰撞問題。</li>
+                            <li><strong class="text-[#111827]">三級品管 (品質查驗)：</strong> 由「BIM 經理」執行。掌控全案 BIM 流程，確認交付之模型品質，並協調決定碰撞檢討報告的解決方案。</li>
+                        </ul>
+
+                        <div class="mt-8 bg-[#111827] text-white p-6 border-l-4 border-[#c05621]">
+                            <strong class="uppercase tracking-widest text-[#c05621] text-sm block mb-2">課程總結與反思</strong>
+                            <p class="text-gray-300 text-[15px] leading-relaxed">透過這 14 小時的課程，學生從最基礎的 2D CAD 線條指令起步，在最後的 BIM 單元中，我們帶領同學實際翻閱了這本達 50 頁的業界標準《BIM 執行計畫書》。這幫助新生建構一套從 2D 製圖到 3D 資訊管理、符合業界實戰需求的「系統化工程管理思維」。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unit 06: Quiz & Certificate -->
+            <section id="unit6" class="content-section min-h-full p-8 md:p-16 max-w-6xl mx-auto">
+                <header class="mb-14 border-b-bauhaus pb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <p class="bg-[#c05621] text-white px-3 py-1 font-bold tracking-widest uppercase text-xs">UNIT 06</p>
+                        <p class="text-gray-500 uppercase tracking-widest text-xs font-bold border border-gray-300 px-3 py-1">Assessment</p>
+                    </div>
+                    <h1 class="text-huge font-black uppercase leading-none tracking-tight text-[#111827]">BIM 建築資訊模型<br>基礎職能評鑑</h1>
+                </header>
+
+                <div class="bg-white border-bauhaus p-8 shadow-bauhaus mb-16 relative">
+                    <div class="absolute -top-3 left-6 bg-white px-2 font-black text-xs uppercase tracking-widest text-[#c05621]">Assessment Rules</div>
+                    <p class="text-[15px] text-gray-800 font-medium leading-relaxed">
+                        這是一份為您精心設計的 40 題 BIM 素養導向選擇題測驗。題目涵蓋《BIM核心概念》、《BEP執行計畫書》與《實務創新應用》。<br><br>
+                        <strong>通關條件：</strong>必須答對 <span class="text-[#c05621] font-black text-lg">80%</span> (32題) 以上。過關後將解鎖專屬結業證書下載區！
+                    </p>
+                </div>
+
+                <!-- Quiz Container -->
+                <div id="quiz-container" class="space-y-8">
+                    <!-- Quiz questions will be injected here via JavaScript -->
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-12 text-center">
+                    <button onclick="submitQuiz()" id="submit-quiz-btn" class="btn-primary px-12 py-5 text-lg w-full md:w-auto shadow-[4px_4px_0px_0px_#c05621]">
+                        <i class="fa-solid fa-check-double mr-2"></i> 提交評鑑測驗 (Submit)
+                    </button>
+                </div>
+
+                <!-- Result & Certificate Section -->
+                <div id="result-section" class="hidden mt-16 border-bauhaus bg-gray-50 p-8 text-center shadow-bauhaus">
+                    <h2 id="result-title" class="text-3xl font-black uppercase tracking-tight mb-4"></h2>
+                    <p id="result-score" class="text-xl font-bold text-gray-700 mb-6"></p>
+                    
+                    <!-- Hidden Certificate Form -->
+                    <div id="certificate-form" class="hidden max-w-md mx-auto mt-8 border-t border-gray-300 pt-8">
+                        <h3 class="text-lg font-black text-[#c05621] uppercase tracking-widest mb-4"><i class="fa-solid fa-award mr-2"></i> Unlock Certificate</h3>
+                        <p class="text-sm text-gray-600 mb-4">恭喜通過測驗！請輸入您的姓名以生成專屬結業證書。</p>
+                        <input type="text" id="student-name" class="w-full px-5 py-3 border-bauhaus mb-4 text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-[#c05621]" placeholder="請輸入您的真實姓名">
+                        <button onclick="generateAndDownloadCertificate()" class="btn-terracotta w-full py-4 text-sm">
+                            <i class="fa-solid fa-download mr-2"></i> 下載專屬證書
+                        </button>
+                    </div>
+
+                    <button id="retry-btn" onclick="resetQuiz()" class="hidden btn-primary px-8 py-3 mx-auto mt-6 text-sm">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> 重新測驗
+                    </button>
+                </div>
+
+                <!-- Hidden Canvas for Certificate Generation -->
+                <canvas id="cert-canvas" width="1200" height="848" class="hidden"></canvas>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- AI Bot Button -->
+    <button id="ai-chat-btn" onclick="toggleAIChat()" class="fixed bottom-8 right-8 bg-[#111827] text-white w-16 h-16 shadow-bauhaus hover:bg-[#c05621] transition-all duration-300 hidden flex items-center justify-center z-40 border-bauhaus rounded-none">
+        <i class="fa-solid fa-robot text-2xl"></i>
+    </button>
+
+    <!-- AI Chat Box -->
+    <div id="ai-chat-box" class="fixed bottom-28 right-8 w-[350px] sm:w-[400px] bg-white border-[3px] border-[#111827] flex-col overflow-hidden z-50 hidden transition-all shadow-bauhaus rounded-none">
+        <div class="bg-[#111827] text-white p-5 flex justify-between items-center border-b-bauhaus">
+            <span class="font-bold tracking-widest uppercase text-sm flex items-center"><i class="fa-solid fa-robot mr-3 text-[#c05621] text-lg"></i> SYSTEM ASSISTANT</span>
+            <button onclick="toggleAIChat()" class="text-gray-300 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div id="chat-messages" class="p-5 h-80 overflow-y-auto bg-white flex flex-col space-y-6 font-medium text-sm">
+            <div class="flex items-start">
+                <div class="w-8 h-8 bg-gray-100 flex items-center justify-center text-[#111827] mr-4 flex-shrink-0 border-bauhaus rounded-none">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="bg-gray-50 border-bauhaus text-[#111827] p-4 rounded-none leading-relaxed shadow-[2px_2px_0px_0px_#111827]">
+                    您好！我是專屬的 AI 小助手。<br><br>我的知識庫涵蓋本站所有詳細的單元內容，包含第六單元的職能評鑑。請詢問關於：圖層線寬、剖面梁深修正、大樣圖結構厚度或 BEP 碰撞檢查等任何問題。
+                </div>
+            </div>
+        </div>
+        <div class="p-4 bg-gray-50 border-t-bauhaus flex items-center">
+            <input type="text" id="chat-input" class="flex-1 border-bauhaus bg-white rounded-none px-4 py-3 focus:outline-none focus:ring-1 focus:ring-[#c05621] text-sm font-medium transition placeholder-gray-400" placeholder="Type your inquiry...">
+            <button onclick="sendAIMessage()" class="ml-2 w-12 h-12 bg-[#111827] text-white rounded-none hover:bg-[#c05621] transition flex items-center justify-center border-bauhaus shadow-[2px_2px_0px_0px_#111827]">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // === Quiz Data (40 Questions) ===
+        const quizData = [
+            { q: "某營造廠老闆抱怨：「現在年輕人都不願意來工地，覺得環境髒亂又危險。」為了解決缺工與「3K產業」的刻板印象，公司決定導入 BIM 與數位轉型。請問數位轉型在營建業的最核心目的為何？", options: { A: "為了能畫出更逼真的 3D 銷售廣告圖。", B: "將「勞力密集」的傳統工地，轉化為「技術密集」的智慧化與自動化管理。", C: "取代所有的現場監工，完全交由軟體自動判斷。", D: "僅是為了符合政府法規的文書作業要求。" }, ans: "B", exp: "營建業長期受限於「髒亂、危險、辛苦」的 3K 產業宿命，數位轉型的核心目的正是以「技術密集」取代「勞力密集」，透過 BIM 結合無人機、AI 與自動化設備來改善施工環境，這是產業升級的必然趨勢。" },
+            { q: "大一新生小華認為：「BIM 就只是把原本 AutoCAD 的 2D 平面圖，變成可以用滑鼠旋轉的 3D 立體模型而已。」根據 BIM (Building Information Modeling) 的完整定義，小華的觀念缺少了哪一個最關鍵的核心？", options: { A: "缺少了對「單一建築 (Building)」的認識。", B: "缺少了對硬體設備的認知。", C: "缺少了「資訊整合 (Information)」與「全生命週期預先模擬」的概念。", D: "缺少了渲染軟體的操作能力。" }, ans: "C", exp: "BIM 不只是 3D 塊體，其核心在於「資訊 (Information)」，包含了幾何尺寸與非幾何資訊（如材質、傳熱係數等），並強調在專案全生命週期各階段進行預先模擬分析及綜合應用。" },
+            { q: "專案經理想要向業主展示：「在明年一月到十二月期間，這棟大樓的鋼構將會如何一根一根搭建起來。」請問這屬於 BIM 的哪一種維度（Dimension）應用？", options: { A: "3D 空間碰撞", B: "4D 進度排程模擬", C: "5D 成本算量", D: "6D 設施維護管理" }, ans: "B", exp: "將 3D 空間模型綁定時間軸（排程計畫），讓模型能隨著時間自動「生長」模擬施工順序，即屬於 4D 進度規劃的範疇。" },
+            { q: "某工程團隊在建築設計階段全面導入 BIM 技術。根據統計效益，這項舉動最有可能為設計階段帶來哪一項具體的數據改善？", options: { A: "減少現場工人薪資發放遲延率達 50%。", B: "減少營運期間耗電量達 80%。", C: "最高可消除 40% 的未預期變更設計。", D: "縮短行政機關審查建照時間達 90%。" }, ans: "C", exp: "在規劃設計階段，BIM 能落實「設計即所視，所視即所得」，透過事前檢核，最高可消除 40% 的未預期變更設計，大幅減少設計錯誤與遺漏。" },
+            { q: "為了讓跨國、跨專業的百人團隊能確保拿到的模型都是「最新且正確的版本」，業界會導入 CDE (通用資料環境)。當 BIM 經理審核完內部的模型，準備提交給「業主端」進行審查時，該檔案在平台上的狀態應屬於哪一個階段？", options: { A: "WIP (工作中)", B: "Shared (協作/分享)", C: "Published (公布)", D: "Archived (歸檔)" }, ans: "B", exp: "根據 BIM 360 與 CDE 的標準作業流程，階段成果上傳給業主審查時，狀態會處於 Shared (協作)。待業主發文核定後才會轉為 Published (公布)。" },
+            { q: "高科技廠房的廠務經理希望能透過平板電腦，隨時點擊模型中的一台冰水主機，就能即時看見其目前的運轉溫度、耗電量與故障警報。這屬於 BIM 結合以下哪一種技術的應用？", options: { A: "BIM 結合 3D 列印技術", B: "BIM 結合 IoT (物聯網) 與 BAS (建築管理系統)", C: "BIM 結合無人機傾斜攝影", D: "BIM 結合 4D 排程軟體" }, ans: "B", exp: "在營運管理階段，BIM 結合物聯網 (IoT)、大數據與建築管理系統 (BAS)，能達成設備可視化與即時化監控，打造高效率的智慧綠建築。" },
+            { q: "公司剛接下一個大型統包案，急需採購一系列的 BIM 軟體來建立團隊。若你們的目標是要進行「跨專業模型的整合與碰撞檢查 (Clash Detection)」，下列哪一套軟體是首選？", options: { A: "Graphisoft ArchiCAD", B: "Autodesk Navisworks", C: "Twinmotion", D: "Dynamo" }, ans: "B", exp: "ArchiCAD 主要用於 3D 建築建模；Twinmotion 用於視覺彩現；Dynamo 用於自動化參數開發。而 Navisworks 專門用於 3D Review、模型套疊整合與碰撞檢查。" },
+            { q: "王同學想成為頂尖的 BIM 工程師，他已經熟練掌握了 Revit 的建築、結構與機電建模技能。根據系統化學習地圖，他下一步最「不優先」去學的技能為何？", options: { A: "Navisworks 碰撞分析", B: "BIM 360 雲端協作平台", C: "研讀 BEP (BIM執行計畫書) 專案管理規範", D: "直接跳級學習 NASA 火星基地 3D 列印開發" }, ans: "D", exp: "依據建議的 BIM 學習順序，建模技能之後應進入進階的碰撞分析、BIM360 協作，接著培養管理思維（學習 BEP 內容），最後才是高階的二次開發。火星建築雖是趨勢，但非正規晉升路徑。" },
+            { q: "東港鎮水資源回收中心專案剛啟動，土木包商、機電包商與建築師三方首次開會。請問在大家開始用電腦畫 3D 模型之前，必須先共同確立並簽署哪一份文件，以免日後模型無法整合？", options: { A: "CAD 出圖筆寬對照表", B: "BIM 工作執行計畫書 (BEP)", C: "建築技術規則", D: "施工日報表" }, ans: "B", exp: "BEP (BIM Execution Plan) 是指導 BIM 專案執行的最高準則，用以確保所有團隊在同一標準（如座標、命名、LOD）下建置與應用模型，並須在開工 30 日內提送。" },
+            { q: "在 BIM 專案團隊組織中，小趙被指派負責「填寫自主檢查表，確保自己畫的管線沒有重複元件，並且尺寸大於 5 公分的量體都有建置」。請問小趙在團隊中扮演的角色與執行的品管層級為何？", options: { A: "BIM 經理 / 三級品管", B: "BIM 協調員 / 二級品管", C: "BIM 建模員 / 一級品管", D: "專案業主 / 驗收查驗" }, ans: "C", exp: "BIM 建模員負責依據圖說建置模型，並須對自己的模型進行第一線的「自主檢查」，這屬於一級品質管理。" },
+            { q: "東港鎮水資中心專案規定了嚴格的檔案命名邏輯：階段代碼_標的代碼_專業系統_版次。若今天你要上傳「施工階段」、「管理中心」、「消防專業」的第 2 版模型，根據 BEP 規範，正確的檔名為何？", options: { A: "C_J_ME_02", B: "U_J_FF_02", C: "U_A_AR_02", D: "U_J_FF_2" }, ans: "B", exp: "根據 BEP，施工階段代碼為 U；管理中心代碼為 J；消防專業代碼為 FF；版次為兩碼數字 02。因此結合為 U_J_FF_02。" },
+            { q: "機電工程師大衛與建築師小美分別建置了東港案的模型，但在 Navisworks 套疊時，發現機電管線全部跑到建築物外面去了！最有可能的原因是他們違反了 BEP 的哪一項規定？", options: { A: "使用了不同版本的 Revit 軟體。", B: "忘了為管線設定顏色。", C: "專案基準點沒有統一對齊規定的測量點（GP02）與座標系統（TWD97）。", D: "沒有填寫碰撞檢核表。" }, ans: "C", exp: "各專業系統模型若未統一原點，套疊時將發生空間錯位。BEP 明確規定本案採 TWD97 座標系統，並以 GP02 為專案基準點。" },
+            { q: "土木工程師在繪製「初沉池」的 RC 結構底板，而機電工程師在繪製內部的「空調冷媒管線」。依照 BEP 規範，他們在 Revit 中設定的專案單位 (Units) 應該分別為何？", options: { A: "兩者皆須設定為公分 (cm)。", B: "土木設定為公分 (cm)，機電設定為公厘 (mm)。", C: "土木設定為公尺 (m)，機電設定為公分 (cm)。", D: "兩者皆須設定為公厘 (mm)。" }, ans: "B", exp: "BEP 規定土木結構、建築及敷地模型採用公分 (cm) 至小數點後 1 位；機電模型則必須採用公厘 (mm) 計算至整數。" },
+            { q: "在複雜的機電整合模型中，為了能快速以肉眼辨識系統，BEP 制定了管線色彩計畫 (Color Coding)。若你在畫面上看到「純藍色 (R=0, G=0, B=255)」的管線，這代表什麼系統？", options: { A: "消防系統 (FF)", B: "電力系統 (ET)", C: "給水冷水管 (CW)", D: "廢水管線 (WP)" }, ans: "C", exp: "依據 BEP 機電子系統顏色規定，冷水管線 (CW) 設定為純藍色。" },
+            { q: "承上題，為了凸顯彩色的機電管線，BEP 對於背景的「土木結構 (ST)」與「建築 (AR)」模型，要求設定為什麼樣的色調？", options: { A: "透明不可見", B: "螢光綠色", C: "灰暗底色 (如 RGB 166, 166, 166)", D: "純黑色" }, ans: "C", exp: "為了使機電各子系統管線方便辨識，被機電系統連結的土木與建築背景模型，均以灰階替代色 (RGB 166,166,166 或 169,188,150) 展示。" },
+            { q: "BIM 模型強調附帶「非幾何資訊」。根據東港案 BEP 規範，當模型發展程度達到 LOD 300 時，一根「結構柱」的屬性資料中，除了長寬高尺寸外，必須強制包含下列哪一項非幾何資訊，以便未來交付維護管理使用？", options: { A: "灌漿工人的姓名", B: "鋼筋的市價波動曲線", C: "維護年限與檢查頻率", D: "建築師的簽名檔" }, ans: "C", exp: "根據 BEP 表 3.9，結構柱的竣工階段附帶資訊必須包含「主要材料」、「維護年限」、「檢查頻率」等營運管理所需之參數資料。" },
+            { q: "在 Revit 中建立元件時，命名規則分為「族群 (Family)」與「類型 (Type)」。若依據 BEP 規範要建立一樘寬 180cm、高 210cm 的雙開 SMC 門，下列命名組合何者正確？", options: { A: "族群：D1_180x210cm ； 類型：SMC門(雙開)", B: "族群：SMC門(雙開) ； 類型：D1_180x210cm", C: "族群：門 ； 類型：雙開", D: "族群：180x210 ； 類型：SMC" }, ans: "B", exp: "BEP 規定族群 (Family) 為該元件的名稱或材質特徵（如：SMC門(雙開)），而類型 (Type) 則是該元件的編號與尺寸（如：D1_180x210cm）。" },
+            { q: "三級品質管理機制中，由「BIM 建模專案負責人」執行的「二級品管 (校核與整合)」，其主要任務為何？", options: { A: "單純檢查自己畫的牆壁尺寸對不對。", B: "決定專案最終是否延期交付。", C: "集合各專業模型，執行跨模型的 3D 空間碰撞衝突檢查。", D: "將模型轉交給當地區公所審查。" }, ans: "C", exp: "二級品管由建模專案負責人執行，主要任務是將土建、建築、機電整合為單一檔案，並執行跨模型的碰撞衝突檢查與除錯。" },
+            { q: "專案進行到一半，現場施工發現 3 樓天花板內的冷氣風管與消防撒水管嚴重打架。BIM 協調員將此問題擷取畫面，並文字敘述「風管需向上提升 15cm 避開消防管」。這份紀錄必須填寫在 BEP 規定的哪一份表單中提送討論？", options: { A: "附件 B 竣工模型現場檢核表", B: "附件 A 建築、結構機電 BIM 模型衝突檢核表", C: "附件 C 自主檢查表(通則性)", D: "每日施工日報表" }, ans: "B", exp: "針對碰撞與衝突問題，BEP 規定必須填寫「附件 A：BIM 模型衝突檢核表」，並附上截圖與問題說明供會議協調。" },
+            { q: "承造廠商準備辦理「竣工驗收」。為了確保廠商沒有交出一個「假模型」（即現場亂蓋，模型卻很完美），BEP 的附件 B「竣工模型現場檢核表」要求執行什麼樣的防弊機制？", options: { A: "要求廠商發誓模型是真的。", B: "將現場實際拍下的照片，與 3D 模型特定視角放在一起比對，落實圖實相符。", C: "只要 2D 竣工圖蓋章即可，不需看模型。", D: "請業主直接住在裡面測試一個月。" }, ans: "B", exp: "竣工模型必須反映實際施工狀況。透過附件 B 的現場檢核表，要求在機房與開放空間抽測數個視點，將現場照片與 3D 竣工模型直接疊合比對，防止虛擬造假。" },
+            { q: "為確保業主接手水資源回收中心後，能具備操作 3D 數位資產的能力，BEP 規定營造廠必須辦理教育訓練。關於此訓練的敘述，下列何者「錯誤」？", options: { A: "總時數為 12 小時。", B: "課程內容包含 Revit 基本操作與 Navisworks 即時漫遊與碰撞檢查。", C: "為了省錢，只發放操作手冊讓業主自學。", D: "上課地點安排於正修科技大學電腦教室。" }, ans: "C", exp: "依據 BEP 規定，不僅不能只發手冊，還嚴格明訂了 12 小時的實體電腦上機操作訓練，並由具備原廠認證的屏科大副教授親自授課。" },
+            { q: "「自主檢查表（附件 C）」是確保模型資訊準確的關鍵。下列哪一項「不屬於」機電工程師在提送模型前，必須在自主檢查表中打勾確認的項目？", options: { A: "尺寸大於 5 公分的量體均已建置。", B: "系統管路有獨立顏色且符合 BEP 分色原則。", C: "確認鋼筋的綁紮工資是否已發放。", D: "重力管（如排水管）有依規定之斜率建置。" }, ans: "C", exp: "自主檢查表是針對「模型建置的幾何與資訊正確性」進行檢核，包含管徑大小限制、管路連接、斜率與分色等，並不包含工人薪資等會計項目。" },
+            { q: "在 BIM 作業流程中，關於「碰撞檢查」的辦理時機，BEP 規定必須在該樓層（部位）土木結構施工前「多久」完成整合檢討與碰撞檢查報告，以免來不及修改現場施工作業？", options: { A: "施工前 30 天", B: "施工前 3 天", C: "灌漿當天早上", D: "施工完成後 30 天" }, ans: "A", exp: "為發揮 BIM 預先模擬的價值，BEP 第五章規定，對於施工部位，必須於結構施工前 30 天完成 BIM 介面整合檢討及碰撞檢查報告。" },
+            { q: "如果發現模型有「非原生族群元件（例如自網路下載的特殊抽水馬達圖塊）」，根據自主檢查表通則，建模員應該做什麼處理？", options: { A: "直接刪除，不准使用。", B: "不用理會，反正看起來像就好。", C: "已標記識別、紀錄在說明文件中，並定義其相對之類型與名稱。", D: "把模型炸開變成 2D 線條。" }, ans: "C", exp: "依據附件 C 通則性檢查表 1.12，專案中非原生族群元件必須被標記識別並記錄，以確保後續維護管理的資訊可追溯性。" },
+            { q: "當設計發生變更（如業主臨時要求新增一道隔間牆）時，BIM 團隊的正確處理流程為何？", options: { A: "只改 2D 圖紙交給現場施作，BIM 模型年底再說。", B: "先在現場把牆砌好，事後再叫 BIM 建模員憑記憶畫上去。", C: "由專案負責人啟動設計變更流程，同步更新 BIM 模型，並重新執行碰撞檢查與出圖。", D: "通知消防局來罰款。" }, ans: "C", exp: "BIM 強調單一真相來源。任何變更都必須回到模型中進行修改，確保「圖實相符」，並重新檢核是否會與既有機電管線產生新衝突。" },
+            { q: "在 BEP 中，機電專業系統代碼劃分極細。若今天你要建置「室內冷氣機組與冷媒管線」，應使用下列哪一個子系統代碼？", options: { A: "FF (消防)", B: "AC (空調通風)", C: "SP (汙水)", D: "ET (電力)" }, ans: "B", exp: "AC (Air Conditioning) 涵蓋室內外空調機組、冷媒管線及送風機、風管等。" },
+            { q: "「鳳山車站暨開發大樓新建工程」是一個在既有營運車站上方增建的巨型專案。為了落實綠建築指標中的「水資源再利用」，BIM 團隊在模型中建置了什麼系統來將雨水轉為澆灌用水？", options: { A: "在大樓外牆掛滿寶特瓶收集雨水。", B: "呼叫消防車每天補水。", C: "建置屋頂匯流管線，經過濾器去除樹葉雜質後，排至地下室「滯洪池」佇留再利用。", D: "將雨水直接排入鄰近的曹公圳，再用水桶去撈。" }, ans: "C", exp: "該案透過 BIM 建置了完整的雨水回收管路系統，精確模擬屋頂雨水經由過濾器流至地下滯洪池的幾何路徑，展現綠建築與機電整合的實力。" },
+            { q: "在鳳山車站 BIM 專案中，團隊執行碰撞檢查（Clash Detection）取得了極大成效。根據資料，地面層、機房層與月台層總共預先抓出了多少處「嚴重碰撞問題」，為國家省下巨額的拆除重做成本？", options: { A: "0 處", B: "10 處", C: "106 處", D: "1000 處" }, ans: "C", exp: "透過系統化的碰撞檢核與介面協調會議，該案共解決了 106 處嚴重衝突（地面層 29 處、機房層 45 處、月台層 32 處）。" },
+            { q: "【進階應用題】由於鳳山車站地下樓層正在營運中，為防止新建月台與管線被行駛中的火車撞擊，BIM 團隊利用 DYNAMO 程式撰寫了「列車動態包絡線」。為了達到極致的安全精度，程式在「轉彎曲線段」設定每隔多少距離就掃掠一次車體輪廓？", options: { A: "每 100 公尺", B: "每 2 公尺", C: "每 1 公尺", D: "每 10 公分" }, ans: "D", exp: "這是該案的技術火力展示。直線段採每 2 公尺掃掠，而在危險的轉彎曲線段，更精細到每 10 公分進行包絡線建置，最終成功抓出月台高程因傾斜而超限的問題。" },
+            { q: "鳳山大樓的大廳挑高達 12 公尺。原設計為了維修管線必須設置「貓道」，但卻面臨了消防排煙法規檢討無法通過的窘境。BIM 團隊利用切剖面視覺化溝通，提出了什麼解決方案並成功讓消防局買單？", options: { A: "直接把大廳屋頂拆掉，變成露天廣場。", B: "在 9.9M 處增設明架礦纖天花板，將撒水頭延伸至天花板下方，並增設封閉維修門。", C: "請消防隊 24 小時派車在門口待命。", D: "取消所有冷氣風管，改用電風扇。" }, ans: "B", exp: "面對空間衝突與法規限制，BIM 團隊透過 3D 模型模擬修改天花板高程（降至 9.9M），並連動調整撒水頭與排煙進出口，這充分展現了 BIM 解決跨專業介面衝突的價值。" },
+            { q: "工程界強調「圖實相符」。在鳳山車站案中，為了確認現場施工的結構體與電腦裡的 BIM 模型一模一樣，團隊導入了下列哪一項前端測繪科技？", options: { A: "Google Earth 衛星地圖", B: "光學雷達掃描 (LIDAR) 與點雲技術 (Point Cloud)", C: "聲納探測", D: "卷尺手工丈量" }, ans: "B", exp: "團隊使用專業的 FARO 掃描儀以及輕便的 iPad Pro 內建的 LIDAR，掃描現場點雲數據並疊加回 BIM 模型中，進行逆向工程比對查核。" },
+            { q: "鳳山車站是由台灣世曦監造、豐譽營造承包，並有多家專業分包商（如鋼構、機電）共同參與。他們透過哪一個 CDE (通用資料環境) 雲端平台，讓業主在手機上就能進行 3D 漫遊與管線檢核？", options: { A: "Facebook 社團", B: "Trimble Connect", C: "YouTube", D: "Line 群組" }, ans: "B", exp: "該專案採用 Trimble Connect 作為 CDE 平台，成功將 Revit (建築/機電) 與 Tekla (鋼構) 等不同軟體產出的模型進行整合與行動端瀏覽。" },
+            { q: "新舊結構介面處理是工程大魔王。鳳山車站原留設之地下室 RC 柱因都審變更必須「切除」。為避免切除後鋼筋的「錨錠深度不足」導致結構危險，現場採取了什麼精確的補強工法？", options: { A: "用水泥隨便糊起來。", B: "使用鏈鋸精準切割後，以 CO2 焊接增加「錨錠鋼板」進行補強。", C: "將整棟地下室挖掉重蓋。", D: "用三秒膠黏死鋼筋。" }, ans: "B", exp: "針對舊柱切除後的結構弱點，BIM 團隊先在模型中確認鋼筋深度，並在現場輔以鏈鋸切割與 CO2 焊接鋼板來確保錨錠拉力安全。" },
+            { q: "承上題，在中央區遇到既有結構「未預留鋼筋接續」，卻又必須「新增一支 RC 柱」時，工程團隊利用了何種方式將新鋼柱錨定在舊樓板上？", options: { A: "用重物壓著不讓它跑掉。", B: "用化學植筋（化錨）安裝鋼柱，並以反向 T 頭進行錨錠。", C: "綁上鐵絲固定。", D: "改變設計，取消那根柱子。" }, ans: "B", exp: "在新舊接合介面中，針對未預留鋼筋的狀況，採用了化錨（化學植筋）與反向 T 頭的工法，這些細節都在 3D 剖面大樣中被精確檢討與標示。" },
+            { q: "在傳統工地中，現場工程師每天下班都要回工務所用手寫「施工日報表」，常常導致數據遺失或造假。鳳山車站為了推動「營管資訊化」，導入了什麼工具讓工程師在現場用平板就能輸入人力與機具資料？", options: { A: "AppSheet 雲端行動應用程式", B: "Instagram 限時動態", C: "傳真機", D: "廣播電台" }, ans: "A", exp: "該專案利用 AppSheet 開發行動端介面，讓工程師依照日期與 WBS 任務標籤，直接在平板輸入現場人數與機具使用量，徹底無紙化。" },
+            { q: "承上題，AppSheet 收集到的海量現場施工大數據（Data），最終會自動傳送至 Microsoft Azure SQL 資料庫，並利用哪一套「視覺化商業智能軟體」自動產出長條圖與圓餅圖的 KPI 績效指標供主管決策？", options: { A: "小畫家", B: "Power BI", C: "Word", D: "Photoshop" }, ans: "B", exp: "營管資訊化的最後一哩路是決策支援 (Decision Support)。透過微軟的 Power BI，能將枯燥的資料庫數據瞬間轉化為動態的視覺化圖表，讓專案經理即時掌握進度。" },
+            { q: "鳳山車站的機房層有許多大型設備（如冰水主機、發電機）必須搬入地下室。為避免發生「機器買來卻卡在車道轉角進不去」的悲劇，BIM 團隊在施工前會進行什麼作業？", options: { A: "設備進場動線模擬", B: "風環境流體力學分析", C: "日照分析", D: "預算成本發包" }, ans: "A", exp: "BIM 團隊會依照真實設備尺寸建立 1:1 模型，並在軟體內沿著車道、斜坡、機房門口模擬拖吊軌跡，確認淨空與彎道半徑是否足夠。" },
+            { q: "在安衛設施（職業安全）的 BIM 應用上，鳳山車站 B 棟 1F-3F 的挑空區原定使用傳統的「可調式鋼管」作為模板支撐。經過 3D 模型檢視高度風險後，為了防止倒塌，改採用了什麼工法？", options: { A: "氣球支撐", B: "竹竿支撐", C: "重撐架 (系統支撐架)", D: "取消挑空設計" }, ans: "C", exp: "高達七米以上的挑空區若使用傳統單管支撐容易發生崩塌意外。透過 BIM 模型事前評估，改採高承載力的「重撐架」，確保現場施工安全。" },
+            { q: "在進行鳳山車站 B 棟廁所的天花板檢討時，原建築設計圖面標示天花板高度 (CH) 為 310cm。但 BIM 機電工程師將排風管與給排水管畫上去後，發現管線會穿出天花板。經過協調考量結構樑深度後，最終決議將天花板高度調整為多少，且依然符合建築技術規則？", options: { A: "150 cm", B: "250 cm", C: "350 cm", D: "400 cm" }, ans: "B", exp: "為容納上方龐大的機電與空調管線，天花板被迫下降。BIM 團隊精算後調整為 CH=250cm（大於法規最低限度 210cm），解決了空間衝突。" },
+            { q: "「鳳山車站暨開發大樓新建工程」即將完工，並準備點交給營運單位（台鐵）。營運單位未來需要進行長達數十年的設施維護管理（FM），例如掌握站內每一台冷卻水塔與空調主機的保養頻率、廠牌型號與出廠資料。為了確保營造廠能將龐大的建築「非幾何資訊」正確無誤地移交給營運方，專案中依據契約導入了哪一項「國際通用資訊交換標準」，且監造工程師須具備何種國際認證來驗證資訊的完整性？", options: { A: "採用 DWG 圖層分類標準，並由具備 AutoCAD 原廠認證之工程師把關。", B: "採用 IFC 幾何開放標準，並由具備勞動部 iCAP 認證之工程師把關。", C: "採用 COBie (施工營運建築資訊交換) 標準，並由具備 ISO 19650 認證之監造工程師把關。", D: "採用 PDF 雲端報表標準，並由具備微軟 Power BI 認證之工程師把關。" }, ans: "C", exp: "本題測驗的是 BIM 在「營運管理階段 (6D)」的資訊移交素養。 在傳統工程中，竣工移交往往是給業主幾大箱的紙本手冊，資料難以搜尋與更新。而在鳳山車站專案的實務執行中，為了落實 BIM 的最大價值，團隊嚴格依據契約導入了 COBie（Construction Operations Building Information Exchange，施工營運建築資訊交換） 標準來建立維護管理資料庫。COBie 能將 3D 模型中的設備資料萃取成標準化的格式，直接匯入業主的設施管理系統中。 此外，為確保龐大的數位資訊在全生命週期的傳遞符合規範，該案的監造工程師（李怡姍）更具備了 ISO 19650（建築資訊塑模之資訊管理國際標準） 的專業認證，以國際級的標準嚴格驗證雲端 APP 平台上維管資訊的完整性。" }
+        ];
+
+        // === Quiz Rendering ===
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            
+            quizData.forEach((item, index) => {
+                const questionHTML = `
+                    <div class="border-bauhaus p-6 md:p-8 bg-white shadow-[2px_2px_0px_0px_#111827] relative" id="q-block-${index}">
+                        <div class="absolute -top-3 left-6 bg-[#111827] text-white px-3 font-black text-sm uppercase tracking-widest">Q${index + 1}</div>
+                        <p class="text-lg font-bold text-[#111827] mb-6 leading-relaxed pt-2">${item.q}</p>
+                        <div class="space-y-3">
+                            ${Object.entries(item.options).map(([key, value]) => `
+                                <label class="quiz-option block border border-gray-300 p-4 relative overflow-hidden group">
+                                    <input type="radio" name="q${index}" value="${key}" class="absolute opacity-0">
+                                    <div class="flex items-start">
+                                        <span class="font-black text-[#c05621] w-8 flex-shrink-0">${key}.</span>
+                                        <span class="text-[15px] font-medium text-gray-700 group-hover:text-[#111827]">${value}</span>
+                                    </div>
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div id="exp-${index}" class="hidden mt-6 p-5 bg-gray-50 border-l-4 border-[#c05621] text-sm text-gray-700 leading-relaxed">
+                            <strong class="text-[#c05621] uppercase tracking-widest mb-1 block">Detailed Explanation:</strong>
+                            <span class="font-bold text-[#111827]">正確答案：${item.ans}。</span> ${item.exp}
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', questionHTML);
+            });
+        }
+
+        // Initialize quiz on load
+        document.addEventListener('DOMContentLoaded', initQuiz);
+
+        // === Quiz Submission & Logic ===
+        function submitQuiz() {
+            let score = 0;
+            let answered = 0;
+
+            quizData.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const expBlock = document.getElementById(`exp-${index}`);
+                const qBlock = document.getElementById(`q-block-${index}`);
+                
+                expBlock.classList.remove('hidden'); // Show explanations
+
+                if (selected) {
+                    answered++;
+                    if (selected.value === item.ans) {
+                        score++;
+                        qBlock.classList.add('border-l-[6px]', 'border-l-green-500');
+                    } else {
+                        qBlock.classList.add('border-l-[6px]', 'border-l-red-500');
+                    }
+                } else {
+                    qBlock.classList.add('border-l-[6px]', 'border-l-gray-400');
+                }
+            });
+
+            // Prevent early submission if not fully answered
+            if (answered < quizData.length) {
+                alert(`您還有 ${quizData.length - answered} 題未作答，請完成所有題目！`);
+                return;
+            }
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            const pass = percentage >= 80;
+
+            // UI Updates
+            document.getElementById('submit-quiz-btn').classList.add('hidden');
+            const resultSec = document.getElementById('result-section');
+            const resTitle = document.getElementById('result-title');
+            const resScore = document.getElementById('result-score');
+            const certForm = document.getElementById('certificate-form');
+            const retryBtn = document.getElementById('retry-btn');
+
+            resultSec.classList.remove('hidden');
+            resScore.innerText = `最終成績：${score} / ${quizData.length} (${percentage}%)`;
+
+            if (pass) {
+                resTitle.innerText = "評鑑合格 (Passed)";
+                resTitle.className = "text-4xl font-black uppercase tracking-tight mb-4 text-green-600";
+                certForm.classList.remove('hidden');
+                retryBtn.classList.add('hidden');
+            } else {
+                resTitle.innerText = "未達標準 (Failed)";
+                resTitle.className = "text-4xl font-black uppercase tracking-tight mb-4 text-red-600";
+                certForm.classList.add('hidden');
+                retryBtn.classList.remove('hidden');
+            }
+            
+            // Scroll to results
+            resultSec.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            document.getElementById('submit-quiz-btn').classList.remove('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+            initQuiz();
+            document.getElementById('unit6').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // === Certificate Generation (HTML5 Canvas with BIM Graphic) ===
+        function generateAndDownloadCertificate() {
+            const studentName = document.getElementById('student-name').value.trim();
+            if (!studentName) {
+                alert('請輸入姓名以產生證書！');
+                return;
+            }
+
+            const canvas = document.getElementById('cert-canvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // 1. Draw Background (Off-white/slate-50)
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(0, 0, width, height);
+
+            // 2. Draw BIM Isometric Wireframe Concept (Background Graphic)
+            ctx.save();
+            ctx.translate(width - 320, 320); // Position at top right
+            ctx.strokeStyle = 'rgba(17, 24, 39, 0.1)'; // Faint charcoal
+            ctx.lineWidth = 1.5;
+            
+            // Isometric math helper
+            function drawIsoCube(ox, oy, oz, size) {
+                const angle = Math.PI / 6; // 30 degrees
+                
+                // 3D to 2D isometric projection
+                const project = (x, y, z) => ({
+                    px: (x - z) * Math.cos(angle),
+                    py: y + (x + z) * Math.sin(angle)
+                });
+
+                const p0 = project(ox, oy, oz);
+                const p1 = project(ox+size, oy, oz);
+                const p2 = project(ox+size, oy+size, oz);
+                const p3 = project(ox, oy+size, oz);
+                const p4 = project(ox, oy, oz+size);
+                const p5 = project(ox+size, oy, oz+size);
+                const p6 = project(ox+size, oy+size, oz+size);
+                const p7 = project(ox, oy+size, oz+size);
+
+                ctx.beginPath();
+                // Bottom face
+                ctx.moveTo(p0.px, p0.py); ctx.lineTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.lineTo(p3.px, p3.py); ctx.closePath();
+                // Top face
+                ctx.moveTo(p4.px, p4.py); ctx.lineTo(p5.px, p5.py); ctx.lineTo(p6.px, p6.py); ctx.lineTo(p7.px, p7.py); ctx.closePath();
+                // Vertical edges
+                ctx.moveTo(p0.px, p0.py); ctx.lineTo(p4.px, p4.py);
+                ctx.moveTo(p1.px, p1.py); ctx.lineTo(p5.px, p5.py);
+                ctx.moveTo(p2.px, p2.py); ctx.lineTo(p6.px, p6.py);
+                ctx.moveTo(p3.px, p3.py); ctx.lineTo(p7.px, p7.py);
+                ctx.stroke();
+            }
+
+            // Draw a cluster of isometric cubes representing a BIM Model
+            const step = 60;
+            for(let x = 0; x < 3; x++) {
+                for(let y = 0; y < 3; y++) {
+                    for(let z = 0; z < 3; z++) {
+                        // Skip some blocks to make it look like a building under construction
+                        if(x==2 && y==2 && z==2) continue; 
+                        if(x==0 && y==2 && z==0) continue;
+                        drawIsoCube(x*step - 100, -(y*step), z*step - 100, step);
+                    }
+                }
+            }
+            
+            // Add Data Nodes/Dots representing "Information" in BIM
+            ctx.fillStyle = '#c05621'; // Terracotta dots
+            ctx.beginPath(); ctx.arc(0, -60, 6, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(100, -120, 6, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(-100, -120, 6, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(0, -180, 8, 0, Math.PI*2); ctx.fill();
+
+            // Connecting lines to data nodes
+            ctx.strokeStyle = '#c05621';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath(); ctx.moveTo(0, -60); ctx.lineTo(100, -120); ctx.lineTo(0, -180); ctx.lineTo(-100, -120); ctx.closePath(); ctx.stroke();
+            ctx.setLineDash([]); // reset
+
+            ctx.restore();
+
+            // 3. Draw Bauhaus Geometric Accents
+            ctx.fillStyle = '#111827'; // Charcoal
+            ctx.fillRect(40, 40, 20, height - 80);
+            ctx.fillStyle = '#c05621'; // Terracotta
+            ctx.fillRect(40, 40, 150, 20);
+            
+            // Border
+            ctx.strokeStyle = '#111827';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(80, 80, width - 120, height - 120);
+
+            // 4. Draw Typography
+            ctx.fillStyle = '#111827';
+            ctx.textAlign = 'center';
+            
+            // Header
+            ctx.font = '900 24px "Inter", sans-serif';
+            ctx.letterSpacing = "6px";
+            ctx.fillText('CERTIFICATE OF ACHIEVEMENT', width / 2 + 20, 160);
+            
+            // Title (Added Vanguard Project)
+            ctx.font = '900 32px "Noto Sans TC", sans-serif';
+            ctx.fillStyle = '#c05621'; // Terracotta accent for the program name
+            ctx.letterSpacing = "8px";
+            ctx.fillText('尖兵計畫', width / 2 + 20, 220);
+
+            // Main Title
+            ctx.fillStyle = '#111827';
+            ctx.font = '900 48px "Noto Sans TC", sans-serif';
+            ctx.letterSpacing = "2px";
+            ctx.fillText('BIM 建築資訊模型', width / 2 + 20, 290);
+            ctx.fillText('基礎職能評鑑合格證書', width / 2 + 20, 360);
+
+            // Statement
+            ctx.font = '500 18px "Noto Sans TC", sans-serif';
+            ctx.letterSpacing = "0px";
+            ctx.fillText('茲證明', width / 2 + 20, 440);
+
+            // Student Name
+            ctx.font = '900 64px "Noto Sans TC", sans-serif';
+            ctx.fillStyle = '#c05621';
+            ctx.fillText(studentName, width / 2 + 20, 520);
+            
+            // Bottom Text
+            ctx.fillStyle = '#111827';
+            ctx.font = '500 18px "Noto Sans TC", sans-serif';
+            ctx.fillText('已成功完成本課程評鑑，具備建築圖學與 BIM 實務核心知識。', width / 2 + 20, 600);
+
+            // 5. Signature & Stamp
+            ctx.textAlign = 'left';
+            ctx.font = '800 24px "Noto Sans TC", sans-serif';
+            ctx.fillText('Instructor', width - 350, 720);
+            ctx.font = '400 20px "Noto Sans TC", sans-serif';
+            ctx.fillText('基本建築圖學: 龍立偉 老師', width - 350, 760);
+
+            // Draw Red Stamp (烙印)
+            ctx.strokeStyle = '#dc2626';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(width - 110, 700, 60, 60);
+            ctx.fillStyle = '#dc2626';
+            ctx.font = '900 22px "Noto Sans TC", sans-serif';
+            ctx.fillText('龍立', width - 105, 725);
+            ctx.fillText('偉印', width - 105, 750);
+            
+            // Date
+            const today = new Date();
+            const dateStr = `${today.getFullYear()}.${String(today.getMonth()+1).padStart(2,'0')}.${String(today.getDate()).padStart(2,'0')}`;
+            ctx.fillStyle = '#64748b';
+            ctx.font = '600 16px "Inter", sans-serif';
+            ctx.fillText(`DATE: ${dateStr}`, 120, 760);
+
+            // 6. Trigger Download
+            const link = document.createElement('a');
+            link.download = `BIM結業證書_${studentName}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // === Authentication ===
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('error-msg');
+            const loginView = document.getElementById('login-view');
+            const appView = document.getElementById('app-view');
+            const aiBtn = document.getElementById('ai-chat-btn');
+
+            if (input === 'NPUSTLWL922') {
+                loginView.classList.add('opacity-0');
+                setTimeout(() => {
+                    loginView.classList.add('hidden');
+                    appView.classList.remove('hidden');
+                    appView.classList.add('flex');
+                    aiBtn.classList.remove('hidden'); 
+                }, 400);
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('password-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById('nav-' + sectionId).classList.add('active');
+            
+            if (window.innerWidth < 768) {
+                document.getElementById('nav-menu').classList.add('hidden');
+            }
+            
+            document.querySelector('main').scrollTop = 0;
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('nav-menu').classList.toggle('hidden');
+        }
+
+        // === AI Chatbot ===
+        function toggleAIChat() {
+            const chatBox = document.getElementById('ai-chat-box');
+            if (chatBox.classList.contains('hidden')) {
+                chatBox.classList.remove('hidden');
+                chatBox.classList.add('flex');
+            } else {
+                chatBox.classList.add('hidden');
+                chatBox.classList.remove('flex');
+            }
+        }
+
+        function getAIResponse(msg) {
+            const m = msg.toLowerCase();
+            if (m.includes('密碼')) return "本課程專屬授權碼為：<b>NPUSTLWL922</b>。";
+            if (m.includes('快捷') || m.includes('指令') || m.includes('autocad')) return "常用指令：REC(矩形)、BLOCK(圖塊)、OFFSET(偏移)、COPY(複製)、TRIM(修剪)、XLINE(建構線)、HATCH(填充)、MLEADER(多重引線)。你可以在單元一的下載區獲取完整「AutoCAD快捷鍵圖表」！";
+            if (m.includes('圖層') || m.includes('線寬')) return "標準圖層規範非常嚴格：<br>👉 柱(COL)洋紅/0.50mm<br>👉 牆(WALL)黃色/0.35mm<br>👉 門窗(DW)綠色/0.15mm<br>👉 剖面結構(SECTION)黃色/0.40mm<br>👉 投影線(PROJECT)171色/0.25mm。未依規定設定會面臨扣分。";
+            if (m.includes('立面') || m.includes('投影') || m.includes('對照')) return "單元二的重點在於「垂直投影」。教學核心是屏除看圖抄圖的習慣。請用 0307 結構平面圖墊底建立骨架，接著疊上 0301 (1F)、0302 (2-5F)、0308 與 0303，利用 XLINE 往下投影，即可畫出 0304 立面圖。";
+            if (m.includes('剖面') || m.includes('陷阱') || m.includes('魔王')) return "總剖面圖 (0305) 的進階魔王考點：<br>1. 2F 以上樓版變薄為 12cm。<br>2. 2F 構造梁變更為 35x60cm。<br>3. <b>3F~RF 構造梁尺寸縮小為 35x50cm</b> (梁底線須向上拉提 10cm)！詳情請見單元三。";
+            if (m.includes('大樣') || m.includes('天溝') || m.includes('防水')) return "繪製天溝與女兒牆大樣圖時：天溝凹槽寬度為 250mm，預留梁版交接 100+100mm；RC 厚度皆為 150mm，洩水坡度為 1:2.5。別忘了用 MLEADER 標註「一布二塗防水塗膜附加層」！這能將2D觀念銜接至3D複合牆元件。";
+            if (m.includes('bim') || m.includes('bep') || m.includes('lod') || m.includes('顏色') || m.includes('機電')) return "BIM 的核心是 Information。本專案符合 LOD 300 規範，座標系統為 TWD97。管線色彩計畫為：消防系統(紅)、給水管(藍)、電力系統(深藍)。三級品質管理包含：自主檢查、3D整合校核、經理品質查驗。";
+            if (m.includes('載') || m.includes('檔案') || m.includes('講義')) return "您可以在「單元一」的區塊找到【AutoCAD快捷鍵圖表】、【建築製圖模型圖】及【電繪用圖下載檔案】的專屬按鈕；「單元五」則有【BIM工作計畫書(BEP)】的下載按鈕！";
+            if (m.includes('測驗') || m.includes('證書') || m.includes('評鑑')) return "第六單元是「BIM 建築資訊模型基礎職能評鑑」。共有 40 題實務情境題，只要答對 80% (32題) 以上，就能解鎖並下載由龍立偉老師親自烙印的專屬 BIM 結業證書喔！祝您順利通關！";
+            
+            return "收到您的提問！根據龍立偉老師的 14 小時課程大綱，我們從 0301 平面圖開始，逐步導出立面(單元二)與剖面(單元三)，接著畫大樣(單元四)，最後接軌 BIM 觀念(單元五)，並以測驗(單元六)結尾。您可以試著用關鍵字問我關於「剖面圖梁深」、「圖層顏色」或「測驗證書」等具體問題！";
+        }
+
+        function sendAIMessage() {
+            const inputField = document.getElementById('chat-input');
+            const message = inputField.value.trim();
+            if (!message) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+            
+            const userHtml = `
+                <div class="flex items-start justify-end animation-fade-in">
+                    <div class="bg-[#111827] text-white p-4 border-bauhaus rounded-none text-sm max-w-[80%] shadow-[2px_2px_0px_0px_#c05621]">
+                        ${escapeHtml(message)}
+                    </div>
+                </div>
+            `;
+            chatMessages.insertAdjacentHTML('beforeend', userHtml);
+            inputField.value = '';
+            scrollToBottom();
+
+            setTimeout(() => {
+                const responseText = getAIResponse(message);
+                const aiHtml = `
+                    <div class="flex items-start animation-fade-in">
+                        <div class="w-8 h-8 bg-gray-100 flex items-center justify-center text-[#111827] mr-4 flex-shrink-0 border-bauhaus rounded-none">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="bg-gray-50 border-bauhaus text-[#111827] p-4 rounded-none text-sm max-w-[85%] leading-relaxed shadow-[2px_2px_0px_0px_#111827]">
+                            ${responseText}
+                        </div>
+                    </div>
+                `;
+                chatMessages.insertAdjacentHTML('beforeend', aiHtml);
+                scrollToBottom();
+            }, 600);
+        }
+
+        document.getElementById('chat-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendAIMessage();
+        });
+
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
